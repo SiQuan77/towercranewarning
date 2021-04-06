@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<!--       th:fragment="sidebar"可以用于抽取公用的html代码！ -->
+
+
+<!--头部导航栏-->
+<nav class="navbar page-header" th:fragment="header_navbar">
+    <a href="#" class="btn btn-link sidebar-mobile-toggle d-md-none mr-auto">
+        <i class="fa fa-bars"></i>
+    </a>
+
+    <a class="navbar-brand" href="#">
+        <img th:src="@{/Wopop_files/logo.png}" style="width: 70px;height: 45px;margin-left: 50px" alt="logo">
+    </a>
+
+    <a href="#" class="btn btn-link sidebar-toggle d-md-down-none">
+        <i class="fa fa-bars"></i>
+    </a>
+
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+               aria-expanded="false">
+                <img th:src="@{/imgs/avatar-1.png}" class="avatar avatar-sm" alt="logo">
+                <span class="small ml-1 d-md-down-none" id="spanname2" th:text="${session.currentUser.id}"></span>
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-right">
+                <a th:href="@{/logout}" class="dropdown-item">
+                    <i class="fa fa-lock"></i> 登出
+                </a>
+            </div>
+        </li>
+    </ul>
+</nav>
+
+
+<!--侧边导航栏-->
+<div class="sidebar" th:fragment="side_navbar">
+    <nav class="sidebar-nav">
+        <ul class="nav">
+            <li class="nav-title">导航栏</li>
+
+            <li class="nav-item">
+<!--                index调用侧边栏时，首页的href要写成#，其他的时候都是index.html-->
+                <a th:if="${source=='index'}" href="#" class="nav-link">
+                    <i class="icon icon-speedometer"></i> 首页
+                </a>
+
+                <a th:if="${source!='index'}" th:href="@{/index}" class="nav-link">
+                    <i class="icon icon-speedometer"></i> 首页
+                </a>
+
+            <!--进行授权判断，如果没有admin:all授权，则不显示员工列表这个按钮！-->
+                <div shiro:hasPermission="admin:all">
+                    <!--            用if进行判断，不用三目运算符是因为{}会被转义    同理-->
+                    <a th:if="${source=='list'}" href="#" class="nav-link">
+                        <i class="icon icon-feed"></i> 员工列表
+                    </a>
+                    <a th:if="${source!='list'}" th:href="@{/emp/getAllEmp}" class="nav-link">
+                        <i class="icon icon-feed"></i> 员工列表
+                    </a>
+                </div>
+
+            </li>
+
+            <li class="nav-item">
+
+            </li>
+
+        </ul>
+    </nav>
+</div>
+
+
+
+</html>
