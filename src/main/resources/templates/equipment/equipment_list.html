@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>机械预警系统--设备管理页面</title>
+    <link rel="stylesheet" th:href="@{/vendor/simple-line-icons/css/simple-line-icons.css}">
+    <link rel="stylesheet" th:href="@{/vendor/font-awesome/css/fontawesome-all.min.css}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script th:src="@{/js/jquery-3.3.1.js}"></script>
+    <script th:src="@{/js/jquery.cookie.js}"></script>
+    <script th:src="@{/vendor/popper.js/popper.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/carbon.js}"></script>
+    <script th:src="@{/js/ziyong/equipment_list.js}" type="text/javascript"></script>
+
+
+</head>
+<body class="sidebar-fixed header-fixed">
+<div class="page-wrapper">
+    <div th:replace="~{commons/commons::header_navbar}"></div>
+
+    <div class="main-container">
+        <div th:replace="~{commons/commons::side_navbar(source='list')}"></div>
+
+        <div class="content">
+            <div class="container-fluid">
+
+                <div class="row ">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <table class="table table-striped" id="equip_table">
+                                <thead>
+                                    <th>sn编号</th>
+                                    <th>设备名字</th>
+                                    <th>设备信息号</th>
+                                    <th>型号</th>
+                                    <th>设备产权单位</th>
+                                    <th>产权单位社会统一信用代码</th>
+                                    <th>安装单位</th>
+                                    <th>安装时间</th>
+                                    <th>拆除单位</th>
+                                    <th>拆除时间</th>
+                                    <th>操作</th>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="equip:${equip_list}">
+                                        <td th:text="${equip.getSn()}"></td>
+                                        <td th:text="${equip.getName()}"></td>
+                                        <td th:text="${equip.getXinxihao()}"></td>
+                                        <td th:text="${equip.getType()}"></td>
+                                        <td th:text="${equip.getProperty_contractor()}"></td>
+                                        <td th:text="${equip.getProperty_contractor_id()}"></td>
+                                        <td th:text="${equip.getInstallation_contractor()}"></td>
+                                        <td th:text="${equip.getInstalling_time()}"></td>
+                                        <td th:text="${equip.getDismantle_contractor()==null ? '无' : equip.getDismantle_contractor()}"></td>
+                                        <td th:text="${equip.getDismantle_time()==null ? '无' : equip.getDismantle_time()}"></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary" th:onclick="bianji_equip([[${equip.getSn()}]])">编辑</button>
+                                            <button class="btn btn-sm btn-danger" th:onclick="delete_equip([[${equip.getSn()}]])">删除</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="bianjiModalId" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    ×
+                                </button>
+                            </div>
+                            <form method="post" th:action="@{/equip/update}">
+                                <div class="modal-body form-horizontal">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">SN编号：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                        <input type="text" readonly="readonly" class="input form-control" id="tanchaung_sn" name="tanchaung_sn">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">设备名字：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                        <input type="text" class="input form-control" id="tanchuang_name" aria-describedby="basic-addon3" name="tanchaung_equip_name">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">设备信息号：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                        <input type="text" class="input form-control" id="tanchuang_xinxihao" aria-describedby="basic-addon3" name="tanchuang_xinxihao">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">型号：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                        <input type="text" class="input form-control" id="tanchuang_type" aria-describedby="basic-addon3" name="tanchuang_type">
+                                    </div>
+
+                                    <div class="input-group">
+                                        <span class="input-group-addon">设备产权单位：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                        <input type="text" class="input form-control" id="tanchuang_sbcqdw" aria-describedby="basic-addon3" name="tanchuang_sbcqdw">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">产权单位社会统一信用代码：</span>
+                                        <input type="text" class="input form-control" id="tanchuang_xinyongdaima" aria-describedby="basic-addon3" name="tanchuang_xinyongdaima">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">安装单位：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                        <input type="text" class="input form-control" id="tanchuang_azdw" aria-describedby="basic-addon3" name="tanchaung_azdw">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">安装时间：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                        <input type="date" class="input form-control" id="tanchuang_installtime" aria-describedby="basic-addon3" name="tanchuang_installtime">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">拆除单位：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                        <input type="text" class="input form-control" id="tanchuang_ccdw" aria-describedby="basic-addon3" name="tanchuang_ccdw">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">拆除时间：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                        <input type="date" class="input form-control" id="tanchuang_dismantletime" aria-describedby="basic-addon3" name="tanchaung_dismantle">
+                                        <span class="input-group-addon">若时间为1900-01-01，则无拆除时间。若进行修改，则进行添加拆除时间操作</span>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary" id="loginModalYesId">提交</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
