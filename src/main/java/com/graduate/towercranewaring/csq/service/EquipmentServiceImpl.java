@@ -38,4 +38,9 @@ public class EquipmentServiceImpl implements EquipmentService{
     public boolean updateEquipmentByEquip(equipment equipment) {
         return equipmentDao.updateEquipmentByEquip(equipment);
     }
+
+    @Override
+    public boolean addEquipment(equipment equipment) {
+        return equipmentDao.addEquipment(equipment);
+    }
 }

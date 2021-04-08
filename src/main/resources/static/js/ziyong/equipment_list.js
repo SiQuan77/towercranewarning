@@ -1,4 +1,6 @@
-
+function add_equip(){
+    $('#addModalId').modal('show');
+}
 
 function delete_equip(sn) {
     var msg="您真的要删除sn号为"+sn+"的设备吗？\n\n请确认！"
@@ -18,7 +20,7 @@ function delete_equip(sn) {
             },
             "json"
         )
-
+        alert("删除成功！")
         location.reload();
     }else {
 
@@ -76,8 +78,36 @@ function bianji_equip(sn) {
     //判断拆除时间是否为无，若为无则进行处理
     if (dismantle_time === '无') {
         $('#tanchuang_dismantletime').val("1900-01-01");
+
     } else {
         $('#tanchuang_dismantletime').val(dismantle_time);
+    }
+
+}
+
+function shenghe_equip(){
+    var sn=$('#tanchuang_sn2').val();
+    var tb = document.getElementById("equip_table");  //根据id找到这个表格
+    var rows = tb.rows;               //取得这个table下的所有行
+    var flag=0;
+    for (var i = 0; i < rows.length; i++)//循环遍历所有的tr行
+    {
+            if (rows[i].cells[0].innerText === sn) {
+                document.getElementById("tanchuang_shenghe").innerHTML="该sn已存在"
+                // $('#tanchuang_shenghe').innerHTML="该sn已存在！";
+                $('#tanchuang_shenghe').css('color','red');
+                flag=1;
+        }
+
+    }
+
+    if(flag===0){
+        document.getElementById("tanchuang_shenghe").innerHTML="该sn可用"
+        // $('#tanchuang_shenghe').innerHTML="该sn可用！";
+        $('#tanchuang_shenghe').css('color','green');
+        return 0;
+    }else {
+        return 1;
     }
 
 }

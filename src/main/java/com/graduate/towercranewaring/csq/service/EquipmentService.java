@@ -9,4 +9,5 @@ public interface EquipmentService {
     equipment getEquipmentBySn(String equip_sn);
     boolean deleteEquipmentBySn(String equip_sn);
     boolean updateEquipmentByEquip(equipment equipment);
+    boolean addEquipment(equipment equipment);
 }

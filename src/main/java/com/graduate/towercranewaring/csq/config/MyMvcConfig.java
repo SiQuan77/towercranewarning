@@ -16,7 +16,6 @@ public class MyMvcConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("login");//直接路由到登录界面去
-        registry.addViewController("/404.html").setViewName("login");
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/index").setViewName("index");
     }

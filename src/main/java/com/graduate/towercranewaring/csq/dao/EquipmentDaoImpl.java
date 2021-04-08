@@ -75,4 +75,13 @@ public class EquipmentDaoImpl implements EquipmentDao{
         return row != 0;
 
     }
+
+    @Override
+    public boolean addEquipment(equipment equipment) {
+        String sql="insert into equipment VALUES (?,?,?,?,?,?,?,?,?,?)";
+
+        int row=jdbcTemplate.update(sql,equipment.getSn(),equipment.getName(),equipment.getXinxihao(),equipment.getType(),equipment.getProperty_contractor(),equipment.getProperty_contractor_id(),
+                equipment.getInstallation_contractor(),equipment.getInstalling_time(),equipment.getDismantle_contractor(),equipment.getDismantle_time());
+        return row!=0;
+    }
 }

@@ -6,8 +6,8 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 
-    #SpringBoot默认是不注入这些的，需要自己绑定
-    #druid数据源专有配置
+    #    Springboot does not inject these by default, so it needs to bind itself
+    #    Druid data source specific configuration
     initialSize: 5
     minIdle: 5
     maxActive: 20
@@ -20,10 +20,10 @@ spring:
     testOnReturn: false
     poolPreparedStatements: true
 
-    #配置监控统计拦截的filters，stat：监控统计、log4j：日志记录、wall：防御sql注入
-    #如果允许报错，java.lang.ClassNotFoundException: org.apache.Log4j.Priority
-    #则导入log4j 依赖就行
+    #Configure filters, stat, monitoring statistics, log4j: log record, wall, defense SQL injection
     filters: stat,wall,log4j
     maxPoolPreparedStatementPerConnectionSize: 20
     useGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+  thymeleaf:
+    cache: false
