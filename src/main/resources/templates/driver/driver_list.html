@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
+
+<!--需要导入两个命名空间！-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>机械预警系统主页</title>
+        <link rel="stylesheet" th:href="@{/vendor/simple-line-icons/css/simple-line-icons.css}">
+        <link rel="stylesheet" th:href="@{/vendor/font-awesome/css/fontawesome-all.min.css}">
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
+        <script th:src="@{/js/jquery-3.3.1.js}"></script>
+        <script th:src="@{/js/jquery.cookie.js}"></script>
+        <script th:src="@{/vendor/popper.js/popper.min.js}"></script>
+        <script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+        <script th:src="@{/js/carbon.js}"></script>
+        <script th:src="@{/js/ziyong.js}" type="text/javascript"></script>
+</head>
+<body class="sidebar-fixed header-fixed">
+<div class="page-wrapper">
+
+    <div th:replace="~{commons/commons::header_navbar(source='driver_list')}"></div>
+<!--    thymeleaf进行一个传参操作-->
+
+
+    <div class="main-container">
+        <div th:replace="~{commons/commons::side_navbar(source='driver_list')}"></div>
+
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="card p-5">
+                            <div class="card-body d-flex justify-content-between align-items-t">
+                                <div>
+                                <img th:src="${filename}">
+                                <form th:action="@{/driver/upload_headimg}" method="post" enctype="multipart/form-data">
+                                    <input type="file" name="head_img">
+                                    <button class="btn btn-primary" type="submit">提交</button>
+                                </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
