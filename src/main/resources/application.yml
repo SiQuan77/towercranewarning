@@ -33,4 +33,4 @@ spring:
       max-request-size: 100MB
 #      最大上传的文件大小为10MB,最大的整个上传请求的大小不超过100MB
 web:
-  upload-path: E:\Programming Related\IdeaProjects\graduate_project\src\main\resources\static\imgs\driver_headimg
+  upload-path: E:\Programming Related\IdeaProjects\graduate_project\src\main\resources\static\imgs\driver_head

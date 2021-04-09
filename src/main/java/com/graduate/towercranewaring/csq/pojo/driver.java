@@ -21,5 +21,5 @@ public class driver {
     private String gender;
     private String id_card_number;
     private String tel_number;
-    private byte[] photo;
+    private String photo;
 }
