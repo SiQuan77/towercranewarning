@@ -110,5 +110,4 @@ public class EquipmentController {
         return "redirect:/equip/ToequipList";
     }
 
-
 }

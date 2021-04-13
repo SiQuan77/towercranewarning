@@ -20,7 +20,8 @@ public class sjj_working {
     private int top_limit;
     private int low_limit;
     private int tilt_range;
-    private String lock_condition;
+    private int lock_condition;
     private int height;
     private String driver_id;
+    private String working_time;
 }

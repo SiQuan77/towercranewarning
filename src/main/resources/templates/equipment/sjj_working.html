@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>机械预警系统--升降机工作管理页面</title>
+    <link rel="stylesheet" th:href="@{/vendor/simple-line-icons/css/simple-line-icons.css}">
+    <link rel="stylesheet" th:href="@{/vendor/font-awesome/css/fontawesome-all.min.css}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script th:src="@{/js/jquery-3.3.1.js}"></script>
+    <script th:src="@{/js/jquery.cookie.js}"></script>
+    <script th:src="@{/vendor/popper.js/popper.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/carbon.js}"></script>
+    <script th:src="@{/js/ziyong/sjj_working.js}"></script>
+
+
+</head>
+<body class="sidebar-fixed header-fixed">
+<div class="page-wrapper">
+    <div th:replace="~{commons/commons::header_navbar}"></div>
+
+    <div class="main-container">
+        <div th:replace="~{commons/commons::side_navbar(source='sjj_working')}"></div>
+
+        <div class="content">
+            <div class="container-fluid">
+
+                <div class="row ">
+                    <div class="col-md-12">
+                        <div class="card-header">
+                            <h1>设备工作记录</h1>
+                        </div>
+                        <div class="card card-body">
+                            <table class="table table-striped" id="equip_table">
+                                <thead>
+                                    <th>工作记录编号</th>
+                                    <th>设备编号</th>
+                                    <th>设备名字</th>
+                                    <th>上限位</th>
+                                    <th>下限位</th>
+                                    <th>倾斜角度</th>
+                                    <th>上锁状态</th>
+                                    <th>当前高度</th>
+                                    <th>操作员</th>
+                                    <th>操作员编号</th>
+                                    <th>记录时间</th>
+                                    <th>操作</th>
+                                </thead>
+                                <tbody>
+                                <tr th:each="sjj_working:${sjj_working}">
+                                    <td th:text="${sjj_working.getSjj_working().getId()}"></td>
+                                    <td th:text="${sjj_working.getSjj_working().getSn()}"></td>
+                                    <td th:text="${sjj_working.getEquipment().getName()}"></td>
+                                    <td th:text="${sjj_working.getSjj_working().getTop_limit()}"></td>
+                                    <td th:text="${sjj_working.getSjj_working().getLow_limit()}"></td>
+                                    <td th:if="${sjj_working.getSjj_working().getTilt_range() <= 15}" style="color: green"
+                                        th:text="|${sjj_working.getSjj_working().getTilt_range()}°|"></td>
+                                    <td th:if="${sjj_working.getSjj_working().getTilt_range() > 15}" style="color: red;font-weight: bolder"
+                                        th:text="|${sjj_working.getSjj_working().getTilt_range()}°|"></td>
+<!--                                    <td th:text="${sjj_working.getSjj_working().getLock_condition()==0 ? '未上锁':'已上锁'}"-->
+<!--                                    th:style="'color:'+${sjj_working.getSjj_working().getLock_condition()}==0 ? 'red':'green'"></td>-->
+                                    <td th:if="${sjj_working.getSjj_working().getLock_condition()==0}"  style="color: red;"><strong>未上锁</strong></td>
+                                    <td th:if="${sjj_working.getSjj_working().getLock_condition()==1}"  style="color: green">已上锁</td>
+                                    <td th:text="${sjj_working.getSjj_working().getHeight()}"></td>
+                                    <td th:text="${sjj_working.getDriver().getDriver_name()}"></td>
+                                    <td th:text="${sjj_working.getDriver().getDriver_id()}"></td>
+                                    <td th:text="${sjj_working.getSjj_working().getWorking_time()}"></td>
+                                    <td>
+                                        <button class="btn btn-primary" th:onclick="show_more([[${sjj_working.getSjj_working().getId()}]])">详情</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div th:each="sjj_working2:${sjj_working}">
+                    <div class="modal fade" th:id="${sjj_working2.getSjj_working().getId()}" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    记录详情
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        ×
+                                    </button>
+                                </div>
+
+                                    <div class="modal-body form-horizontal">
+                                        <div class="input-group">
+                                            <span th:text="|设备SN号:${sjj_working2.getSjj_working().getSn()}|" class="input-group-addon"></span>
+<!--                                            <input type="text" readonly="readonly" class="input form-control" id="tanchaung_sn" name="tanchaung_sn">-->
+                                        </div>
+
+                                    </div>
+
+                                <div class="modal-body form-horizontal">
+                                    <div class="input-group">
+                                        <span th:text="|设备SN号:${sjj_working2.getSjj_working().getSn()}|" class="input-group-addon"></span>
+                                        <!--                                            <input type="text" readonly="readonly" class="input form-control" id="tanchaung_sn" name="tanchaung_sn">-->
+                                    </div>
+
+                                </div>
+                                <div class="modal-body form-horizontal">
+                                    <div class="input-group">
+                                        <span th:text="|设备SN号:${sjj_working2.getSjj_working().getSn()}|" class="input-group-addon"></span>
+                                        <!--                                            <input type="text" readonly="readonly" class="input form-control" id="tanchaung_sn" name="tanchaung_sn">-->
+                                    </div>
+
+                                </div>
+                                <div class="modal-body form-horizontal">
+                                    <div class="input-group">
+                                        <span th:text="|设备SN号:${sjj_working2.getSjj_working().getSn()}|" class="input-group-addon"></span>
+                                        <!--                                            <input type="text" readonly="readonly" class="input form-control" id="tanchaung_sn" name="tanchaung_sn">-->
+                                    </div>
+
+                                </div>
+                                <div class="modal-body form-horizontal">
+                                    <div class="input-group">
+                                        <span th:text="|设备SN号:${sjj_working2.getSjj_working().getSn()}|" class="input-group-addon"></span>
+                                        <!--                                            <input type="text" readonly="readonly" class="input form-control" id="tanchaung_sn" name="tanchaung_sn">-->
+                                    </div>
+
+                                </div>
+                                <div class="modal-body form-horizontal">
+                                    <div class="input-group">
+                                        <span th:text="|设备SN号:${sjj_working2.getSjj_working().getSn()}|" class="input-group-addon"></span>
+                                        <!--                                            <input type="text" readonly="readonly" class="input form-control" id="tanchaung_sn" name="tanchaung_sn">-->
+                                    </div>
+
+                                </div>
+                                <div class="modal-body form-horizontal">
+                                    <div class="input-group">
+                                        <span th:text="|设备SN号:${sjj_working2.getSjj_working().getSn()}|" class="input-group-addon"></span>
+                                        <!--                                            <input type="text" readonly="readonly" class="input form-control" id="tanchaung_sn" name="tanchaung_sn">-->
+                                    </div>
+
+                                </div>
+                                <div class="modal-body form-horizontal">
+                                    <div class="input-group">
+                                        <span th:text="|设备SN号:${sjj_working2.getSjj_working().getSn()}|" class="input-group-addon"></span>
+                                        <!--                                            <input type="text" readonly="readonly" class="input form-control" id="tanchaung_sn" name="tanchaung_sn">-->
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
