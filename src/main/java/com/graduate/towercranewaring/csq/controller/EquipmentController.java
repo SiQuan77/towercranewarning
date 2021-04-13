@@ -32,7 +32,7 @@ public class EquipmentController {
     }
 
     @RequestMapping("/equip/delete")
-    public String DeleteEquipmentBySn(HttpServletRequest request,Model model){
+    public String DeleteEquipmentBySn(HttpServletRequest request){
         String sn=request.getParameter("sn");
         equipmentService.deleteEquipmentBySn(sn);
         System.out.println("进入delete");

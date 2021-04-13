@@ -8,4 +8,6 @@ public interface DriverDao {
     List<driver> getAllDriver();
     boolean updateDriver(driver driver);
     driver getDriverById(String id);
+    boolean addDriver(driver driver);
+    boolean deleteDriverById(String driver_id);
 }

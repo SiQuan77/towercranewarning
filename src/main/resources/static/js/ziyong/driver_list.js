@@ -38,3 +38,33 @@ function bianji_driver(id){
 
 
 }
+
+function add_driver() {
+    $('#addjiModalId').modal('show');
+}
+
+
+function delete_driver(id) {
+    var msg="您真的要删除id号为"+id+"的司机吗？\n\n请确认！"
+
+    if(confirm(msg)===true){
+        $.post(
+            "/driver/delete",
+            {"driver_id":id},
+            function (response){
+                console.log(response);
+                // if(response.success){
+                //     alert("删除成功！");
+                // }else {
+                //     alert("删除失败！");
+                // }
+
+            },
+            "json"
+        )
+        alert("删除成功！")
+        location.reload();
+    }else {
+
+    }
+}

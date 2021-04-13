@@ -53,6 +53,10 @@ public class FileUtils {
         InputStream in = null;
         byte[] data = null;
 
+        if(!imgFile.exists()){
+            return null;
+        }
+
         // 读取图片字节数组
         try {
             in = new FileInputStream(imgFile);
@@ -77,7 +81,16 @@ public class FileUtils {
      * @author huangshikai
      */
     public static String ImageToBase64ByLocal(String imgFilePath){
-        return ImageToBase64ByLocal(new File(imgFilePath));
+        if(imgFilePath==null){
+            return null;
+        }
+        File file=new File(imgFilePath);
+        if(!file.exists()){
+            return null;
+        }else {
+            return ImageToBase64ByLocal(file);
+        }
+
     }
 
 

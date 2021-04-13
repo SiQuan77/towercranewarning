@@ -53,4 +53,10 @@ public class DriverServiceImpl implements DriverService{
     public driver getDriverById(String id) {
         return driverDao.getDriverById(id);
     }
+
+    @Override
+    public boolean addDriver(driver driver) { return driverDao.addDriver(driver); }
+
+    @Override
+    public boolean deleteDriverById(String driver_id) { return driverDao.deleteDriverById(driver_id); }
 }

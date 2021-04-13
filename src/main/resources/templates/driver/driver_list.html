@@ -34,6 +34,7 @@
                 <div class="row">
 
                     <div class="col-md-12">
+                        <button class="btn btn-primary" onclick="add_driver()">添加新司机</button>
                         <div class="card">
                                 <div>
 <!--                                <img th:src="${filename}">-->
@@ -63,7 +64,7 @@
                                             <td th:text="${driver.getTel_number()}"></td>
                                             <td>
                                                 <button class="btn btn-sm btn-primary" th:onclick="bianji_driver([[${driver.getDriver_id()}]])">编辑</button>
-                                                <button class="btn btn-sm btn-danger" th:onclick="delete_equip([[${driver.getDriver_id()}]])">删除</button>
+                                                <button class="btn btn-sm btn-danger" th:onclick="delete_driver([[${driver.getDriver_id()}]])">删除</button>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -124,6 +125,60 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary" id="loginModalYesId">提交</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="modal fade" id="addjiModalId" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        ×
+                                    </button>
+                                </div>
+                                <form method="post" th:action="@{/driver/add}" enctype="multipart/form-data">
+                                    <div class="modal-body form-horizontal">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">姓名：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="text" class="input form-control" id="tanchuang_name2" aria-describedby="basic-addon3" name="tanchaung_name2">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon">年龄：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="number" class="input form-control" id="tanchuang_age2" aria-describedby="basic-addon3" name="tanchuang_age2">
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">性别：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <!--                                            <input type="text" class="input form-control" id="tanchuang_type" aria-describedby="basic-addon3" name="tanchuang_type">-->
+                                            <select name="tanchuang_gender2" class="form-control" id="tanchuang_gender2">
+                                                <option value="男">男</option>
+                                                <option value="女">女</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon">身份证号码：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="tel" class="input form-control" id="tanchuang_id_card2" aria-describedby="basic-addon3" name="tanchuang_id_card2">
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">电话号码：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="tel" class="input form-control" id="tanchuang_tel2" aria-describedby="basic-addon3" name="tanchuang_tel2">
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">照片：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="file" class="input form-control" id="tanchuang_photo2" aria-describedby="basic-addon3" name="tanchuang_photo2">
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">若无照片，则不用上传该项。</span>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary" id="loginModalYesId2">提交</button>
                                     </div>
                                 </form>
                             </div>

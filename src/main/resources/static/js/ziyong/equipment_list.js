@@ -86,28 +86,42 @@ function bianji_equip(sn) {
 }
 
 function shenghe_equip(){
-    var sn=$('#tanchuang_sn2').val();
-    var tb = document.getElementById("equip_table");  //根据id找到这个表格
-    var rows = tb.rows;               //取得这个table下的所有行
-    var flag=0;
-    for (var i = 0; i < rows.length; i++)//循环遍历所有的tr行
-    {
-            if (rows[i].cells[0].innerText === sn) {
-                document.getElementById("tanchuang_shenghe").innerHTML="该sn已存在"
-                // $('#tanchuang_shenghe').innerHTML="该sn已存在！";
-                $('#tanchuang_shenghe').css('color','red');
-                flag=1;
-        }
 
+    if(return_shenghe()===0){
+        document.getElementById("tanchuang_shenghe").innerHTML="该sn可用"
+        $('#tanchuang_shenghe').css('color','green');
+
+    }else {
+        document.getElementById("tanchuang_shenghe").innerHTML="该sn已存在"
+        $('#tanchuang_shenghe').css('color','red');
     }
 
-    if(flag===0){
-        document.getElementById("tanchuang_shenghe").innerHTML="该sn可用"
-        // $('#tanchuang_shenghe').innerHTML="该sn可用！";
-        $('#tanchuang_shenghe').css('color','green');
-        return 0;
+}
+
+function return_shenghe(){
+    const sn = $('#tanchuang_sn2').val();
+    const tb = document.getElementById("equip_table");  //根据id找到这个表格
+    const rows = tb.rows;               //取得这个table下的所有行
+    for (let i = 0; i < rows.length; i++)//循环遍历所有的tr行
+    {
+        if (rows[i].cells[0].innerText === sn) {
+            // $('#tanchuang_shenghe').innerHTML="该sn已存在！";
+            return 1;
+        }
+    }
+    return 0;
+
+}
+
+
+function shenghe_biaodan() {
+
+    if(return_shenghe()==1){
+        alert("您输入的表项中有不符要求的！请修改后提交！");
+        return;
     }else {
-        return 1;
+        var form=document.getElementById("form_add");
+        form.submit();
     }
 
 }

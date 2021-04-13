@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 
 /**
@@ -44,14 +45,10 @@ public class DriverController {
 
     @PostMapping("/driver/upload_headimg")
     public String upload(@RequestParam("head_img")MultipartFile headimg, Model model) throws Exception{
-
         if(!headimg.isEmpty()){
             String originFileName=headimg.getOriginalFilename();
             headimg.transferTo(new File(upload_path+"\\"+originFileName));
         }
-
-//        model.addAttribute("filename","/imgs/driver_head/001.jpg");
-
         return "/driver/driver_list";
     }
     @PostMapping("/driver/update")
@@ -71,22 +68,56 @@ public class DriverController {
  * @Param [driver_id, driver_name, driver_age, driver_gender, driver_id_card, driver_tel, photo]
  * @return java.lang.String
  **/
+        String photo_path=null;
 
-
-        if(photo.isEmpty()){
-            driver new_driver=new driver(driver_id,driver_name,driver_age,driver_gender,driver_id_card,driver_tel,
-                    null);
-            driverService.updateDriver(new_driver);
+        if(photo.isEmpty()){//若上传photo为空
+            driverService.updateDriver(new driver(driver_id,driver_name,driver_age,driver_gender,driver_id_card,driver_tel,
+                    null));
         }else {
-            driver existed_driver= driverService.getDriverById(driver_id);
-            photo.transferTo(new File(existed_driver.getPhoto()));
+            if(driverService.getDriverById(driver_id).getPhoto()==null){//如果用户本来就没上传照片
+                photo_path=upload_path+"\\"+driverService.getDriverById(driver_id).getDriver_id()+".jpg";
+                photo.transferTo(new File(photo_path));
+            }else {
+                photo.transferTo(new File(driverService.getDriverById(driver_id).getPhoto()));
+            }
             driverService.updateDriver(new driver(driver_id,driver_name,driver_age,driver_gender,driver_id_card,
-                    driver_tel,null));
-
+                    driver_tel,photo_path));
         }
 
 
         return "redirect:/driver/Todriverlist";
+    }
+
+
+    @PostMapping("/driver/add")
+    public String add(@RequestParam("tanchaung_name2") String driver_name,
+                      @RequestParam("tanchuang_age2") int driver_age,
+                      @RequestParam("tanchuang_gender2") String driver_gender,
+                      @RequestParam("tanchuang_id_card2") String driver_id_card,
+                      @RequestParam("tanchuang_tel2") String driver_tel,
+                      @RequestParam(value = "tanchuang_photo2",required = false) MultipartFile photo)throws IOException{
+        int id_suffix=driverService.getAllDriver().size()+1;
+        String driver_id="d_"+id_suffix;
+
+        if(photo.isEmpty()){
+            driverService.addDriver(new driver(driver_id,driver_name,driver_age,
+                    driver_gender,driver_id_card,driver_tel,null));
+        }else {
+            String photo_path=upload_path+"\\"+driver_id+".jpg";
+
+            photo.transferTo(new File(photo_path));
+            driverService.addDriver(new driver(driver_id,driver_name,driver_age,
+                    driver_gender,driver_id_card,driver_tel,photo_path));
+        }
+
+        return "redirect:/driver/Todriverlist";
+    }
+
+    @RequestMapping("/driver/delete")
+    public String delete_driver(@RequestParam("driver_id") String driver_id){
+        System.out.println("进入deletedriver了！");
+        driverService.deleteDriverById(driver_id);
+        return "/driver/driver_list";
     }
 
 

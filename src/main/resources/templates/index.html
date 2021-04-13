@@ -37,8 +37,9 @@
                         <div class="card p-5">
                             <div class="card-body d-flex justify-content-between align-items-t">
                                 <div>
-                                    <span class="h4 font-weight-normal mb-1" th:text="${session.currentUser.id}"></span></br>
-                                    <h1 style="color: red">欢迎！</h1>
+<!--                                    <span class="h4 font-weight-normal mb-1" th:text="用户"></span>-->
+                                    <span class="h4 font-weight-normal mb-1" th:text="|用户${session.currentUser.id}|"></span></br>
+                                    <h1 style="color: red">欢迎您！</h1>
                                 </div>
 
                                 <div class="h2 text-muted">
@@ -52,8 +53,17 @@
 
                     <div class="col-md-7">
                         <div class="card p-4">
+                            <div class="card-header">
+                                <h1>状况一览:</h1>
+                            </div>
                             <div class="card-body d-flex justify-content-between align-items-center">
-                                <h1>这里显示设备总览信息</h1>
+                                <h2>设备共有<a th:text="${session.sum_of_equip}" th:href="@{/equip/ToequipList}" style="color: #0c87eb"></a>台</h2>
+                                <h2>司机共有<a th:text="${session.sum_of_driver}" th:href="@{/driver/Todriverlist}" style="color: #0c87eb"></a>人</h2>
+
+
+<!--                                themeleaf取值和字符串拼接可以用|xxx${}|进行拼接-->
+<!--                                <a th:href="@{/equip/ToequipList}" th:text="|目前登记在系统的设备共有${sum_of_equip}个|"></a>-->
+<!--                                <a th:href="@{/driver/Todriverlist}" th:text="|目前登记在系统的司机共有${sum_of_driver}个|"></a>-->
                             </div>
                         </div>
                     </div>

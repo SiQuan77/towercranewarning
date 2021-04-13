@@ -41,6 +41,8 @@ public class DriverDaoImpl implements DriverDao{
                 ",photo=? where driver_id = ?";
         String sql2="update driver set driver_name=?,age=?,gender=?,tel_number=? where driver_id = ?";
 
+        //如果修改员工传的的photo是null，则对原值不进行修改
+
         int row;
         if(driver.getPhoto()==null){
             row=jdbcTemplate.update(sql2,driver.getDriver_name(),driver.getAge(),driver.getGender(),
@@ -62,5 +64,21 @@ public class DriverDaoImpl implements DriverDao{
         }catch (Exception e){
             return null;
         }
+    }
+
+    @Override
+    public boolean addDriver(driver driver) {
+        String sql="insert into driver VALUES (?,?,?,?,?,?,?)";
+        int row=jdbcTemplate.update(sql,driver.getDriver_id(),driver.getDriver_name(),driver.getAge(),driver.getGender()
+                ,driver.getId_card_number(),driver.getTel_number(),driver.getPhoto());
+
+        return row!=1;
+    }
+
+    @Override
+    public boolean deleteDriverById(String driver_id) {
+        String sql="delete from driver where driver_id = ?";
+        int row=jdbcTemplate.update(sql,driver_id);
+        return row!=1;
     }
 }
