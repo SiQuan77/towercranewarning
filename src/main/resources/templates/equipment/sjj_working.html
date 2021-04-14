@@ -31,7 +31,7 @@
                 <div class="row ">
                     <div class="col-md-12">
                         <div class="card-header">
-                            <h1>设备工作记录</h1>
+                            <h1>升降机工作记录</h1>
                         </div>
                         <div class="card card-body">
                             <table class="table table-striped" id="equip_table">
@@ -56,6 +56,7 @@
                                     <td th:text="${sjj_working.getEquipment().getName()}"></td>
                                     <td th:text="${sjj_working.getSjj_working().getTop_limit()}"></td>
                                     <td th:text="${sjj_working.getSjj_working().getLow_limit()}"></td>
+
                                     <td th:if="${sjj_working.getSjj_working().getTilt_range() <= 15}" style="color: green"
                                         th:text="|${sjj_working.getSjj_working().getTilt_range()}°|"></td>
                                     <td th:if="${sjj_working.getSjj_working().getTilt_range() > 15}" style="color: red;font-weight: bolder"
@@ -64,7 +65,13 @@
 <!--                                    th:style="'color:'+${sjj_working.getSjj_working().getLock_condition()}==0 ? 'red':'green'"></td>-->
                                     <td th:if="${sjj_working.getSjj_working().getLock_condition()==0}"  style="color: red;"><strong>未上锁</strong></td>
                                     <td th:if="${sjj_working.getSjj_working().getLock_condition()==1}"  style="color: green">已上锁</td>
-                                    <td th:text="${sjj_working.getSjj_working().getHeight()}"></td>
+
+                                    <td th:if="${sjj_working.getSjj_working().getHeight() > sjj_working.getSjj_working().getTop_limit()||sjj_working.getSjj_working().getHeight()<sjj_working.getSjj_working().getLow_limit()}"
+                                        th:text="${sjj_working.getSjj_working().getHeight()}" style="color: red;font-weight: bolder"></td>
+
+                                    <td th:if="${sjj_working.getSjj_working().getHeight()<= sjj_working.getSjj_working().getTop_limit()&&sjj_working.getSjj_working().getHeight()>=sjj_working.getSjj_working().getLow_limit()}"
+                                        th:text="${sjj_working.getSjj_working().getHeight()}" style="color: green;"></td>
+
                                     <td th:text="${sjj_working.getDriver().getDriver_name()}"></td>
                                     <td th:text="${sjj_working.getDriver().getDriver_id()}"></td>
                                     <td th:text="${sjj_working.getSjj_working().getWorking_time()}"></td>
@@ -82,69 +89,120 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    记录详情
+                                    <h1>记录详情</h1>
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                         ×
                                     </button>
                                 </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="card-header">
+                                                <h2>操作员信息</h2>
+                                            </div>
+                                            <div class="card card-body">
+                                                <div class="modal-body form-horizontal">
+                                                    <div class="input-group">
+                                                        <!--                                                        <span th:text="|操作员身份证号:${sjj_working2.getSjj_working().getSn()}|" class="input-group-addon"></span>-->
+                                                        <img th:src="${sjj_working2.getDriver().getPhoto()}" style="width: 200px;height: 220px" >
+                                                    </div>
 
-                                    <div class="modal-body form-horizontal">
-                                        <div class="input-group">
-                                            <span th:text="|设备SN号:${sjj_working2.getSjj_working().getSn()}|" class="input-group-addon"></span>
-<!--                                            <input type="text" readonly="readonly" class="input form-control" id="tanchaung_sn" name="tanchaung_sn">-->
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">操作员id：&emsp;&emsp;</span>
+                                                        <input type="text" readonly="readonly" class="input form-control" th:value="${sjj_working2.getDriver().getDriver_id()}">
+                                                    </div>
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">操作员姓名：&emsp;&emsp;</span>
+                                                        <input type="text" readonly="readonly" class="input form-control" th:value="${sjj_working2.getDriver().getDriver_name()}">
+                                                    </div>
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">操作员年龄：&emsp;&emsp;</span>
+                                                        <input type="text" readonly="readonly" class="input form-control" th:value="${sjj_working2.getDriver().getAge()}">
+                                                    </div>
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">操作员性别：&emsp;&emsp;</span>
+                                                        <input type="text" readonly="readonly" class="input form-control" th:value="${sjj_working2.getDriver().getGender()}">
+                                                    </div>
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">操作员身份证号：</span>
+                                                        <input type="text" readonly="readonly" class="input form-control" th:value="${sjj_working2.getDriver().getId_card_number()}">
+                                                    </div>
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">操作员电话号码：</span>
+                                                        <input type="text" readonly="readonly" class="input form-control" th:value="${sjj_working2.getDriver().getTel_number()}">
+                                                    </div>
+
+                                                </div>
+                                            </div>
                                         </div>
 
+                                        <div class="col-md-6">
+                                            <div class="card-header">
+                                                <h2>升降机信息</h2>
+                                            </div>
+                                            <div class="card card-body">
+                                                <div class="modal-body form-horizontal">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">SN编号：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                                        <input type="text" readonly="readonly" class="input form-control" th:value="${sjj_working2.getEquipment().getSn()}">
+                                                    </div>
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">设备名字：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                                        <input type="text" readonly="readonly" class="input form-control"  aria-describedby="basic-addon3" th:value="${sjj_working2.getEquipment().getName()}">
+                                                    </div>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">设备信息号：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                                        <input type="text" class="input form-control"  aria-describedby="basic-addon3" readonly="readonly" th:value="${sjj_working2.getEquipment().getXinxihao()}">
+                                                    </div>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">型号：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                                        <input type="text" class="input form-control" readonly="readonly" aria-describedby="basic-addon3" th:value="${sjj_working2.getEquipment().getType()}">
+                                                    </div>
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">设备产权单位：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                                        <input type="text" class="input form-control" aria-describedby="basic-addon3" readonly="readonly" th:value="${sjj_working2.getEquipment().getProperty_contractor()}">
+                                                    </div>
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">产权单位社会统一信用代码：</span>
+                                                        <input type="text" class="input form-control"  aria-describedby="basic-addon3" readonly="readonly" th:value="${sjj_working2.getEquipment().getProperty_contractor_id()}">
+                                                    </div>
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">安装单位：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                                        <input type="text" class="input form-control" aria-describedby="basic-addon3" readonly="readonly" th:value="${sjj_working2.getEquipment().getInstallation_contractor()}">
+                                                    </div>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">安装时间：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                                        <input type="text" class="input form-control" aria-describedby="basic-addon3" readonly="readonly" th:value="${sjj_working2.getEquipment().getInstalling_time()}">
+                                                    </div>
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">拆除单位：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                                        <input type="text" th:if="${sjj_working2.getEquipment().getDismantle_contractor() !=null}" class="input form-control" aria-describedby="basic-addon3" readonly="readonly"
+                                                               th:value="${sjj_working2.getEquipment().getDismantle_contractor()}">
+                                                        <input type="text" th:if="${sjj_working2.getEquipment().getDismantle_contractor() ==null}" class="input form-control" aria-describedby="basic-addon3" readonly="readonly"
+                                                               value="未拆除">
+                                                    </div>
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">拆除时间：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                                        <input type="text" th:if="${sjj_working2.getEquipment().getDismantle_time() !=null && sjj_working2.getEquipment().getDismantle_time()!='1900-01-01'}" class="input form-control" aria-describedby="basic-addon3" readonly="readonly"
+                                                               th:value="${sjj_working2.getEquipment().getDismantle_time()}">
+                                                        <input type="text" th:if="${sjj_working2.getEquipment().getDismantle_time() ==null || sjj_working2.getEquipment().getDismantle_time() == '1900-01-01'}"
+                                                              value="未拆除" class="input form-control" aria-describedby="basic-addon3" readonly="readonly" text="未拆除">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
-                                <div class="modal-body form-horizontal">
-                                    <div class="input-group">
-                                        <span th:text="|设备SN号:${sjj_working2.getSjj_working().getSn()}|" class="input-group-addon"></span>
-                                        <!--                                            <input type="text" readonly="readonly" class="input form-control" id="tanchaung_sn" name="tanchaung_sn">-->
-                                    </div>
-
-                                </div>
-                                <div class="modal-body form-horizontal">
-                                    <div class="input-group">
-                                        <span th:text="|设备SN号:${sjj_working2.getSjj_working().getSn()}|" class="input-group-addon"></span>
-                                        <!--                                            <input type="text" readonly="readonly" class="input form-control" id="tanchaung_sn" name="tanchaung_sn">-->
-                                    </div>
-
-                                </div>
-                                <div class="modal-body form-horizontal">
-                                    <div class="input-group">
-                                        <span th:text="|设备SN号:${sjj_working2.getSjj_working().getSn()}|" class="input-group-addon"></span>
-                                        <!--                                            <input type="text" readonly="readonly" class="input form-control" id="tanchaung_sn" name="tanchaung_sn">-->
-                                    </div>
-
-                                </div>
-                                <div class="modal-body form-horizontal">
-                                    <div class="input-group">
-                                        <span th:text="|设备SN号:${sjj_working2.getSjj_working().getSn()}|" class="input-group-addon"></span>
-                                        <!--                                            <input type="text" readonly="readonly" class="input form-control" id="tanchaung_sn" name="tanchaung_sn">-->
-                                    </div>
-
-                                </div>
-                                <div class="modal-body form-horizontal">
-                                    <div class="input-group">
-                                        <span th:text="|设备SN号:${sjj_working2.getSjj_working().getSn()}|" class="input-group-addon"></span>
-                                        <!--                                            <input type="text" readonly="readonly" class="input form-control" id="tanchaung_sn" name="tanchaung_sn">-->
-                                    </div>
-
-                                </div>
-                                <div class="modal-body form-horizontal">
-                                    <div class="input-group">
-                                        <span th:text="|设备SN号:${sjj_working2.getSjj_working().getSn()}|" class="input-group-addon"></span>
-                                        <!--                                            <input type="text" readonly="readonly" class="input form-control" id="tanchaung_sn" name="tanchaung_sn">-->
-                                    </div>
-
-                                </div>
-                                <div class="modal-body form-horizontal">
-                                    <div class="input-group">
-                                        <span th:text="|设备SN号:${sjj_working2.getSjj_working().getSn()}|" class="input-group-addon"></span>
-                                        <!--                                            <input type="text" readonly="readonly" class="input form-control" id="tanchaung_sn" name="tanchaung_sn">-->
-                                    </div>
-
-                                </div>
                             </div>
                         </div>
                     </div>

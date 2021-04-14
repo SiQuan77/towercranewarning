@@ -10,4 +10,5 @@ public interface DriverDao {
     driver getDriverById(String id);
     boolean addDriver(driver driver);
     boolean deleteDriverById(String driver_id);
+    driver returnDriverWithImgBase64(driver driver);
 }

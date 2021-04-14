@@ -2,6 +2,7 @@ package com.graduate.towercranewaring.csq.dao;
 
 import com.graduate.towercranewaring.csq.pojo.driver;
 import com.graduate.towercranewaring.csq.pojo.equipment;
+import com.graduate.towercranewaring.csq.utils.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -80,5 +81,17 @@ public class DriverDaoImpl implements DriverDao{
         String sql="delete from driver where driver_id = ?";
         int row=jdbcTemplate.update(sql,driver_id);
         return row!=1;
+    }
+
+    @Override
+    public driver returnDriverWithImgBase64(driver driver) {
+        if(driver==null){
+            return null;
+        }else if(driver.getPhoto().isEmpty()){
+            return driver;
+        }
+        String path=driver.getPhoto();
+        driver.setPhoto("data:image/jpeg;base64,"+FileUtils.ImageToBase64ByLocal(path));
+        return driver;
     }
 }

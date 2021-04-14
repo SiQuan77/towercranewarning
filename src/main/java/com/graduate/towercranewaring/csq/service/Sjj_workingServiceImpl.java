@@ -34,10 +34,11 @@ public class Sjj_workingServiceImpl implements Sjj_workingService{
     public List<sjj_working_packing> getAllSjj_Working() {
         List<sjj_working_packing> list=new ArrayList<>();
         List<sjj_working> allSjj_working = sjj_workingDao.getAllSjj_Working();
+//        driver的photo会处理一下，处理成base64后再传给前台
         for(int i=0;i<allSjj_working.size();i++){
             list.add(new sjj_working_packing(allSjj_working.get(i),
                     equipmentDao.getEquipmentBySn(allSjj_working.get(i).getSn()),
-                    driverDao.getDriverById(allSjj_working.get(i).getDriver_id())));
+                    driverDao.returnDriverWithImgBase64(driverDao.getDriverById(allSjj_working.get(i).getDriver_id()))));
         }
         return list;
     }
