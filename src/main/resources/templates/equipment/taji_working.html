@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>机械预警系统--塔机工作管理页面</title>
+    <link rel="stylesheet" th:href="@{/vendor/simple-line-icons/css/simple-line-icons.css}">
+    <link rel="stylesheet" th:href="@{/vendor/font-awesome/css/fontawesome-all.min.css}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script th:src="@{/js/jquery-3.3.1.js}"></script>
+    <script th:src="@{/js/jquery.cookie.js}"></script>
+    <script th:src="@{/vendor/popper.js/popper.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/carbon.js}"></script>
+    <script th:src="@{/js/ziyong/taji_working.js}"></script>
+
+
+</head>
+<body class="sidebar-fixed header-fixed">
+<div class="page-wrapper">
+    <div th:replace="~{commons/commons::header_navbar}"></div>
+
+    <div class="main-container">
+        <div th:replace="~{commons/commons::side_navbar(source='taji_working')}"></div>
+
+        <div class="content">
+            <div class="container-fluid">
+
+                <div class="row ">
+                    <div class="col-md-12">
+                        <div class="card-header">
+                            <h1>塔机工作记录</h1>
+                        </div>
+                        <div class="card card-body">
+                            <table class="table table-striped" id="equip_table">
+                                <thead>
+                                    <th>工作记录编号</th>
+                                    <th>设备编号</th>
+                                    <th>设备名字</th>
+                                    <th>起吊时间</th>
+                                    <th>落吊时间</th>
+                                    <th>最大载重</th>
+                                    <th>当前载重</th>
+                                    <th>当前高度</th>
+                                    <th>远近幅度</th>
+                                    <th>塔机力矩</th>
+                                    <th>操作员</th>
+                                    <th>操作</th>
+                                </thead>
+                                <tbody>
+                                <tr th:each="taji_pack:${taji_working}">
+                                    <td th:text="${taji_pack.getTaji_working().getId()}"></td>
+                                    <td th:text="${taji_pack.getTaji_working().getSn()}"></td>
+                                    <td th:text="${taji_pack.getEquipment().getName()}"></td>
+                                    <td th:text="${taji_pack.getTaji_working().getStarting_time()}"></td>
+                                    <td th:text="${taji_pack.getTaji_working().getEnding_time()}"></td>
+                                    <td th:text="${taji_pack.getTaji_working().getMaximum_payload()}"></td>
+                                    <td th:if="${taji_pack.getTaji_working().getLoading_payload() > taji_pack.getTaji_working().getMaximum_payload()}"
+                                        style="color: red;font-weight: bolder" th:text="${taji_pack.getTaji_working().getLoading_payload()}"></td>
+                                    <td th:if="${taji_pack.getTaji_working().getLoading_payload() <= taji_pack.getTaji_working().getMaximum_payload()}"
+                                        style="color: green;" th:text="${taji_pack.getTaji_working().getLoading_payload()}"></td>
+                                    <td th:text="${taji_pack.getTaji_working().getHeight()}"></td>
+                                    <td th:text="${taji_pack.getTaji_working().getRange_size()}"></td>
+                                    <td th:text="${taji_pack.getTaji_working().getMoment()}"></td>
+                                    <td th:text="${taji_pack.getDriver().getDriver_name()}"></td>
+                                    <td>
+                                        <button class="btn btn-primary" th:onclick="show_more([[${taji_pack.getTaji_working().getId()}]])">详情</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:each="taji_pack:${taji_working}">
+                    <div class="modal fade" th:id="${taji_pack.getTaji_working().getId()}" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1>记录详情</h1>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        ×
+                                    </button>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card-header">
+                                            <h2>操作员信息</h2>
+                                        </div>
+                                        <div class="card card-body">
+                                            <div class="modal-body form-horizontal">
+                                                <div class="input-group">
+                                                    <!--                                                        <span th:text="|操作员身份证号:${sjj_working2.getSjj_working().getSn()}|" class="input-group-addon"></span>-->
+                                                    <img th:src="${taji_pack.getDriver().getPhoto()}" style="width: 200px;height: 220px" >
+                                                </div>
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">操作员id：&emsp;&emsp;</span>
+                                                    <input type="text" readonly="readonly" class="input form-control" th:value="${taji_pack.getDriver().getDriver_id()}">
+                                                </div>
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">操作员姓名：&emsp;&emsp;</span>
+                                                    <input type="text" readonly="readonly" class="input form-control" th:value="${taji_pack.getDriver().getDriver_name()}">
+                                                </div>
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">操作员年龄：&emsp;&emsp;</span>
+                                                    <input type="text" readonly="readonly" class="input form-control" th:value="${taji_pack.getDriver().getAge()}">
+                                                </div>
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">操作员性别：&emsp;&emsp;</span>
+                                                    <input type="text" readonly="readonly" class="input form-control" th:value="${taji_pack.getDriver().getGender()}">
+                                                </div>
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">操作员身份证号：</span>
+                                                    <input type="text" readonly="readonly" class="input form-control" th:value="${taji_pack.getDriver().getId_card_number()}">
+                                                </div>
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">操作员电话号码：</span>
+                                                    <input type="text" readonly="readonly" class="input form-control" th:value="${taji_pack.getDriver().getTel_number()}">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="card-header">
+                                            <h2>塔机信息</h2>
+                                        </div>
+                                        <div class="card card-body">
+                                            <div class="modal-body form-horizontal">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">SN编号：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                                    <input type="text" readonly="readonly" class="input form-control" th:value="${taji_pack.getEquipment().getSn()}">
+                                                </div>
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">设备名字：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                                    <input type="text" readonly="readonly" class="input form-control"  aria-describedby="basic-addon3" th:value="${taji_pack.getEquipment().getName()}">
+                                                </div>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">设备信息号：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                                    <input type="text" class="input form-control"  aria-describedby="basic-addon3" readonly="readonly" th:value="${taji_pack.getEquipment().getXinxihao()}">
+                                                </div>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">型号：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                                    <input type="text" class="input form-control" readonly="readonly" aria-describedby="basic-addon3" th:value="${taji_pack.getEquipment().getType()}">
+                                                </div>
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">设备产权单位：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                                    <input type="text" class="input form-control" aria-describedby="basic-addon3" readonly="readonly" th:value="${taji_pack.getEquipment().getProperty_contractor()}">
+                                                </div>
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">产权单位社会统一信用代码：</span>
+                                                    <input type="text" class="input form-control"  aria-describedby="basic-addon3" readonly="readonly" th:value="${taji_pack.getEquipment().getProperty_contractor_id()}">
+                                                </div>
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">安装单位：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                                    <input type="text" class="input form-control" aria-describedby="basic-addon3" readonly="readonly" th:value="${taji_pack.getEquipment().getInstallation_contractor()}">
+                                                </div>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">安装时间：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                                    <input type="text" class="input form-control" aria-describedby="basic-addon3" readonly="readonly" th:value="${taji_pack.getEquipment().getInstalling_time()}">
+                                                </div>
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">拆除单位：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                                    <input type="text" th:if="${taji_pack.getEquipment().getDismantle_contractor() !=null}" class="input form-control" aria-describedby="basic-addon3" readonly="readonly"
+                                                           th:value="${taji_pack.getEquipment().getDismantle_contractor()}">
+                                                    <input type="text" th:if="${taji_pack.getEquipment().getDismantle_contractor() ==null}" class="input form-control" aria-describedby="basic-addon3" readonly="readonly"
+                                                           value="未拆除">
+                                                </div>
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">拆除时间：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                                    <input type="text" th:if="${taji_pack.getEquipment().getDismantle_time() !=null && taji_pack.getEquipment().getDismantle_time()!='1900-01-01'}" class="input form-control" aria-describedby="basic-addon3" readonly="readonly"
+                                                           th:value="${taji_pack.getEquipment().getDismantle_time()}">
+                                                    <input type="text" th:if="${taji_pack.getEquipment().getDismantle_time() ==null || taji_pack.getEquipment().getDismantle_time() == '1900-01-01'}"
+                                                           value="未拆除" class="input form-control" aria-describedby="basic-addon3" readonly="readonly" text="未拆除">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

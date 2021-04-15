@@ -24,4 +24,5 @@ public class sjj_working {
     private int height;
     private String driver_id;
     private String working_time;
+    private int if_include;
 }

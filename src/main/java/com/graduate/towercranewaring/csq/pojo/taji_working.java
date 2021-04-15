@@ -21,8 +21,9 @@ public class taji_working {
     private String ending_time;
     private int maximum_payload;
     private int height;
-    private int load;
-    private int range;
+    private int loading_payload;
+    private int range_size;
     private int moment;
     private String driver_id;
+    private int if_include;
 }

@@ -48,6 +48,7 @@ public class ShiroConfig {
         filterMap.put("/equipment_list.html","perms[admin:all]");//认证了才能被访问
         filterMap.put("/equip/*","perms[admin:all]");//认证了才能被访问
         filterMap.put("/driver/*","perms[admin:all]");//认证了才能被访问
+        filterMap.put("/alert/*","perms[admin:all]");//认证了才能被访问
         filterMap.put("/index","authc");//认证了才能被访问(认证了才能访问等同于登陆了才能被访问)
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
