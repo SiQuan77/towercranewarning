@@ -49,7 +49,9 @@ public class EquipmentController {
                                       @RequestParam(value = "tanchaung_azdw") String install_dw,
                                       @RequestParam(value = "tanchuang_installtime")String install_time,
                                       @RequestParam(value = "tanchaung_dismantle")String dismantle_time,
-                                      @RequestParam(value = "tanchuang_ccdw")String dismantle_dw){
+                                      @RequestParam(value = "tanchuang_ccdw")String dismantle_dw,
+                                      @RequestParam(value = "tanchuang_left")int left,
+                                      @RequestParam(value = "tanchuang_top") int top){
         System.out.println("进来啦！");
         String dismantle_time2;
         if(dismantle_time=="1900-01-01"){
@@ -64,7 +66,7 @@ public class EquipmentController {
             dismantle_dw2=dismantle_dw;
         }
         equipment new_equipment=new equipment(sn,equip_name,xinxihao,type,sbcqdw,xinyongdaima,
-                install_dw,install_time,dismantle_dw2,dismantle_time2);
+                install_dw,install_time,dismantle_dw2,dismantle_time2,left,top);
         if(equipmentService.updateEquipmentByEquip(new_equipment)){
             System.out.println("成功！");
         }else {
@@ -85,7 +87,9 @@ public class EquipmentController {
                                       @RequestParam(value = "tanchaung_azdw2") String install_dw,
                                       @RequestParam(value = "tanchuang_installtime2")String install_time,
                                       @RequestParam(value = "tanchaung_dismantle2")String dismantle_time,
-                                      @RequestParam(value = "tanchuang_ccdw2")String dismantle_dw){
+                                      @RequestParam(value = "tanchuang_ccdw2")String dismantle_dw,
+                                        @RequestParam(value = "tanchuang_left2")int left,
+                                        @RequestParam(value = "tanchuang_top2") int top){
         System.out.println("进来啦！");
         String dismantle_time2;
         if(dismantle_time=="1900-01-01"){
@@ -100,7 +104,7 @@ public class EquipmentController {
             dismantle_dw2=dismantle_dw;
         }
         equipment new_equipment=new equipment(sn,equip_name,xinxihao,type,sbcqdw,xinyongdaima,
-                install_dw,install_time,dismantle_dw2,dismantle_time2);
+                install_dw,install_time,dismantle_dw2,dismantle_time2,left,top);
         if(equipmentService.addEquipment(new_equipment)){
             System.out.println("成功！");
         }else {

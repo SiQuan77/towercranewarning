@@ -42,7 +42,8 @@ function bianji_equip(sn) {
     var install_time;
     var dismantle_dw;
     var dismantle_time;
-
+    var left;
+    var top;
 
     for (var i = 0; i < rows.length; i++)//循环遍历所有的tr行
     {
@@ -56,15 +57,21 @@ function bianji_equip(sn) {
                 type = rows[i].cells[3].innerText;
                 equip_cqdw = rows[i].cells[4].innerText;
                 xinyongdaima = rows[i].cells[5].innerText;
-                install_dw = rows[i].cells[6].innerText;
-                install_time = rows[i].cells[7].innerText;
-                dismantle_dw = rows[i].cells[8].innerText;
-                dismantle_time = rows[i].cells[9].innerText;
+                left = rows[i].cells[6].innerText;
+                top = rows[i].cells[7].innerText;
+                install_dw = rows[i].cells[8].innerText;
+                install_time = rows[i].cells[9].innerText;
+                dismantle_dw = rows[i].cells[10].innerText;
+                dismantle_time = rows[i].cells[11].innerText;
+
             }
         }
 
     }
-
+    console.log("left是")
+    console.log(left);
+    console.log("top是")
+    console.log(top);
     $('#tanchaung_sn').val(sn);
     $('#tanchuang_name').val(equipname);
     $('#tanchuang_xinxihao').val(equipxinxihao);
@@ -74,6 +81,8 @@ function bianji_equip(sn) {
     $('#tanchuang_azdw').val(install_dw);
     $('#tanchuang_installtime').val(install_time);
     $('#tanchuang_ccdw').val(dismantle_dw);
+    $('#tanchuang_left').val(left);
+    $('#tanchuang_top').val(top);
 
     //判断拆除时间是否为无，若为无则进行处理
     if (dismantle_time === '无') {

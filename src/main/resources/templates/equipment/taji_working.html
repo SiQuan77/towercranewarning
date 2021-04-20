@@ -189,6 +189,16 @@
                                                     <input type="text" th:if="${taji_pack.getEquipment().getDismantle_time() ==null || taji_pack.getEquipment().getDismantle_time() == '1900-01-01'}"
                                                            value="未拆除" class="input form-control" aria-describedby="basic-addon3" readonly="readonly" text="未拆除">
                                                 </div>
+
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">x坐标：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                                    <input type="text" class="input form-control" aria-describedby="basic-addon3" readonly="readonly" th:value="${taji_pack.getEquipment().getPosition_left()}">
+                                                </div>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">y坐标：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                                    <input type="text" class="input form-control" aria-describedby="basic-addon3" readonly="readonly" th:value="${taji_pack.getEquipment().getPosition_top()}">
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>

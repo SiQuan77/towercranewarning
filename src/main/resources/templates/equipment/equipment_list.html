@@ -40,6 +40,8 @@
                                     <th>型号</th>
                                     <th>设备产权单位</th>
                                     <th>产权单位社会统一信用代码</th>
+                                    <th>x坐标</th>
+                                    <th>y坐标</th>
                                     <th>安装单位</th>
                                     <th>安装时间</th>
                                     <th>拆除单位</th>
@@ -54,10 +56,13 @@
                                         <td th:text="${equip.getType()}"></td>
                                         <td th:text="${equip.getProperty_contractor()}"></td>
                                         <td th:text="${equip.getProperty_contractor_id()}"></td>
+                                        <th th:text="${equip.getPosition_left()}"></th>
+                                        <th th:text="${equip.getPosition_top()}"></th>
                                         <td th:text="${equip.getInstallation_contractor()}"></td>
                                         <td th:text="${equip.getInstalling_time()}"></td>
                                         <td th:text="${equip.getDismantle_contractor()==null ? '无' : equip.getDismantle_contractor()}"></td>
                                         <td th:text="${equip.getDismantle_time()==null || equip.getDismantle_time()=='1900-01-01' ? '无'  : equip.getDismantle_time()}"></td>
+
                                         <td>
                                             <button class="btn btn-sm btn-primary" th:onclick="bianji_equip([[${equip.getSn()}]])">编辑</button>
                                             <button class="btn btn-sm btn-danger" th:onclick="delete_equip([[${equip.getSn()}]])">删除</button>
@@ -105,6 +110,14 @@
                                         <input type="text" class="input form-control" id="tanchuang_xinyongdaima" aria-describedby="basic-addon3" name="tanchuang_xinyongdaima">
                                     </div>
                                     <div class="input-group">
+                                        <span class="input-group-addon">x坐标：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                        <input type="text" class="input form-control" id="tanchuang_left" aria-describedby="basic-addon3" name="tanchuang_left">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">y坐标：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                        <input type="text" class="input form-control" id="tanchuang_top" aria-describedby="basic-addon3" name="tanchuang_top">
+                                    </div>
+                                    <div class="input-group">
                                         <span class="input-group-addon">安装单位：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
                                         <input type="text" class="input form-control" id="tanchuang_azdw" aria-describedby="basic-addon3" name="tanchaung_azdw">
                                     </div>
@@ -119,11 +132,13 @@
                                     <div class="input-group">
                                         <span class="input-group-addon">拆除时间：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
                                         <input type="date" class="input form-control" id="tanchuang_dismantletime" aria-describedby="basic-addon3" name="tanchaung_dismantle">
-                                        <span class="input-group-addon">若时间为1900-01-01，则无拆除时间。若进行修改，则进行添加拆除时间操作</span>
+                                        <span class="input-group-addon">若时间为1900-01-01，则无拆除时间。若修改，则进行添加拆除时间操作</span>
                                     </div>
+
+
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary" id="loginModalYesId">提交</button>
+                                    <button type="submit" class="btn btn-primary">提交</button>
                                 </div>
                             </form>
                         </div>
@@ -168,6 +183,16 @@
                                         <span class="input-group-addon">产权单位社会统一信用代码：</span>
                                         <input type="text" class="input form-control" id="tanchuang_xinyongdaima2" aria-describedby="basic-addon3" name="tanchuang_xinyongdaima2">
                                     </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">x坐标：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                        <input type="number" class="input form-control" id="tanchuang_left2" aria-describedby="basic-addon3" name="tanchuang_left2">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">y坐标：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                        <input type="number" class="input form-control" id="tanchuang_top2" aria-describedby="basic-addon3" name="tanchuang_top2">
+                                    </div>
+
+
                                     <div class="input-group">
                                         <span class="input-group-addon">安装单位：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
                                         <input type="text" class="input form-control" id="tanchuang_azdw2" aria-describedby="basic-addon3" name="tanchaung_azdw2">

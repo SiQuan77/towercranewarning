@@ -67,6 +67,20 @@
                             </div>
                         </div>
                     </div>
+
+
+
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h1>预警记录</h1>
+                            </div>
+                            <div class="card-body">
+                                <h2>预警记录共有<a th:text="${session.sum_of_alert}" th:href="@{/alert/ToAlertList}" style="color: red"></a>条</h2>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
 
 

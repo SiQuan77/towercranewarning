@@ -25,5 +25,6 @@ public class equipment {
     private String installing_time;
     private String dismantle_contractor;
     private String dismantle_time;
-
+    private int position_left;
+    private int position_top;
 }

@@ -46,11 +46,12 @@ public class ShiroConfig {
 
         filterMap.put("/login","anon");//login可以被所有用户访问
         filterMap.put("/equipment_list.html","perms[admin:all]");//认证了才能被访问
+        filterMap.put("/user/ToIndex","perms[admin:all]");//认证了才能被访问
         filterMap.put("/equip/*","perms[admin:all]");//认证了才能被访问
         filterMap.put("/driver/*","perms[admin:all]");//认证了才能被访问
         filterMap.put("/alert/*","perms[admin:all]");//认证了才能被访问
         filterMap.put("/index","authc");//认证了才能被访问(认证了才能访问等同于登陆了才能被访问)
-
+        filterMap.put("/map/*","authc");//认证了才能被访问(认证了才能访问等同于登陆了才能被访问)
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 
 

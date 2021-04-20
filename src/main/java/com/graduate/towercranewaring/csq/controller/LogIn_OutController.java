@@ -1,9 +1,6 @@
 package com.graduate.towercranewaring.csq.controller;
 
-import com.graduate.towercranewaring.csq.service.DriverServiceImpl;
-import com.graduate.towercranewaring.csq.service.EquipmentService;
-import com.graduate.towercranewaring.csq.service.EquipmentServiceImpl;
-import com.graduate.towercranewaring.csq.service.UserServiceImpl;
+import com.graduate.towercranewaring.csq.service.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -35,6 +32,10 @@ public class LogIn_OutController {
     @Autowired
     private EquipmentServiceImpl equipmentService;
 
+    @Autowired
+    private Alert_informationServiceImpl alert_informationService;
+
+
     @RequestMapping("/user/login")
     public String login(@RequestParam("username") String username, @RequestParam("password") String password
             , Model model, HttpSession session){
@@ -50,6 +51,7 @@ public class LogIn_OutController {
             session.setAttribute("currentUser",subject.getPrincipal());
             session.setAttribute("sum_of_equip",equipmentService.getAllEquip().size());
             session.setAttribute("sum_of_driver",driverService.getAllDriver().size());
+            session.setAttribute("sum_of_alert",alert_informationService.getAllAlertList().size());
             return "index";
         }catch (UnknownAccountException e){//说明用户名不存在
             model.addAttribute("msg","用户名不存在！");
@@ -60,6 +62,17 @@ public class LogIn_OutController {
         }
 
     }
+
+    @RequestMapping("/user/ToIndex")
+    public String ToIndex(Model model,HttpSession session){
+        session.setAttribute("sum_of_equip",equipmentService.getAllEquip().size());
+        session.setAttribute("sum_of_driver",driverService.getAllDriver().size());
+        session.setAttribute("sum_of_alert",alert_informationService.getAllAlertList().size());
+        return "index";
+    }
+
+
+
     @RequestMapping("/logout")
     public String logout(){
         Subject subject=SecurityUtils.getSubject();

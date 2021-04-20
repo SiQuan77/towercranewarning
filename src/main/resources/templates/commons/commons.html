@@ -49,7 +49,7 @@
                     <i class="icon icon-list"></i> 首页
                 </a>
 
-                <a th:if="${source!='index'}" th:href="@{/index}" class="nav-link">
+                <a th:if="${source!='index'}" th:href="@{/user/ToIndex}" class="nav-link">
                     <i class="icon icon-list"></i> 首页
                 </a>
 
@@ -100,6 +100,16 @@
                     </a>
                     <a th:if="${source!='alert'}" th:href="@{/alert/ToAlertList}" class="nav-link">
                         <i class="icon icon-bulb"></i> 预警记录
+                    </a>
+                </div>
+
+                <div shiro:hasPermission="admin:all">
+                    <!--            用if进行判断，不用三目运算符是因为{}会被转义    同理-->
+                    <a th:if="${source=='map'}" href="#" class="nav-link">
+                        <i class="icon icon-map"></i> 地图一览
+                    </a>
+                    <a th:if="${source!='map'}" th:href="@{/map/ToMap}" class="nav-link">
+                        <i class="icon icon-map"></i> 地图一览
                     </a>
                 </div>
 

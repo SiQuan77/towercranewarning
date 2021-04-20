@@ -65,11 +65,11 @@ public class EquipmentDaoImpl implements EquipmentDao{
     @Override
     public boolean updateEquipmentByEquip(equipment equipment) {
         String sql="update equipment set name=?,xinxihao=?,type=?,property_contractor=?,property_contractor_id=?" +
-                ",installation_contractor=?,installing_time=?,dismantle_contractor=?,dismantle_time=? where sn = ?";
+                ",installation_contractor=?,installing_time=?,dismantle_contractor=?,dismantle_time=?,position_left = ?,position_top=? where sn = ?";
 
 
         int row=jdbcTemplate.update(sql,equipment.getName(),equipment.getXinxihao(),equipment.getType(),equipment.getProperty_contractor(),equipment.getProperty_contractor_id(),
-                equipment.getInstallation_contractor(),equipment.getInstalling_time(),equipment.getDismantle_contractor(),equipment.getDismantle_time(),
+                equipment.getInstallation_contractor(),equipment.getInstalling_time(),equipment.getDismantle_contractor(),equipment.getDismantle_time(),equipment.getPosition_left(),equipment.getPosition_top(),
                 equipment.getSn());
 
         return row != 0;
@@ -78,10 +78,10 @@ public class EquipmentDaoImpl implements EquipmentDao{
 
     @Override
     public boolean addEquipment(equipment equipment) {
-        String sql="insert into equipment VALUES (?,?,?,?,?,?,?,?,?,?)";
+        String sql="insert into equipment VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 
         int row=jdbcTemplate.update(sql,equipment.getSn(),equipment.getName(),equipment.getXinxihao(),equipment.getType(),equipment.getProperty_contractor(),equipment.getProperty_contractor_id(),
-                equipment.getInstallation_contractor(),equipment.getInstalling_time(),equipment.getDismantle_contractor(),equipment.getDismantle_time());
+                equipment.getInstallation_contractor(),equipment.getInstalling_time(),equipment.getDismantle_contractor(),equipment.getDismantle_time(),equipment.getPosition_left(),equipment.getPosition_top());
         return row!=0;
     }
 }

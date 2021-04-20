@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
+
+<!--需要导入两个命名空间！-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>机械预警系统主页</title>
+        <link rel="stylesheet" th:href="@{/vendor/simple-line-icons/css/simple-line-icons.css}">
+        <link rel="stylesheet" th:href="@{/vendor/font-awesome/css/fontawesome-all.min.css}">
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
+        <script th:src="@{/js/jquery-3.3.1.js}"></script>
+        <script th:src="@{/js/jquery.cookie.js}"></script>
+        <script th:src="@{/vendor/popper.js/popper.min.js}"></script>
+        <script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+        <script th:src="@{/js/carbon.js}"></script>
+        <script th:src="@{/js/ziyong/map.js}" type="text/javascript"></script>
+</head>
+<body class="sidebar-fixed header-fixed">
+<div class="page-wrapper">
+
+    <div th:replace="~{commons/commons::header_navbar(source='map')}"></div>
+<!--    thymeleaf进行一个传参操作-->
+
+
+    <div class="main-container">
+        <div th:replace="~{commons/commons::side_navbar(source='map')}"></div>
+
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h1>施工地图</h1>
+                            </div>
+                            <div class="card-body">
+                                <img th:src="@{/imgs/map.jpg}" style="width: 100%;height: 1000px;position: relative">
+                                <div th:each="taji:${taji_list}">
+                                   <img th:src="@{/imgs/taji.jpg}" class="img-circle" th:style="|width:50px;height: 50px;z-index: 1;position: absolute;top:${taji.getPosition_top()}px;left: ${taji.getPosition_left}px|"
+                                        th:onclick="show([[${taji.getSn()}]])">
+                                </div>
+
+                                <div th:each="sjj:${sjj_list}">
+                                    <img th:src="@{/imgs/sjj.jpg}" class="img-circle" th:style="|width:50px;height: 50px;z-index: 1;position: absolute;top:${sjj.getPosition_top()}px;left: ${sjj.getPosition_left}px|"
+                                         th:onclick="show([[${sjj.getSn()}]])">
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div th:each="taji2:${taji_list}">
+                        <div class="modal fade" th:id="${taji2.getSn()}" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1>塔机设备详情</h1>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                            ×
+                                        </button>
+                                    </div>
+                                    <div class="modal-body form-horizontal">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">SN编号：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="text" readonly="readonly" class="input form-control" th:value="${taji2.getSn()}">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon">设备名字：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="text" readonly="readonly" class="input form-control"  aria-describedby="basic-addon3" th:value="${taji2.getName()}">
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">设备信息号：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="text" class="input form-control"  aria-describedby="basic-addon3" readonly="readonly" th:value="${taji2.getXinxihao()}">
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">型号：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="text" class="input form-control" readonly="readonly" aria-describedby="basic-addon3" th:value="${taji2.getType()}">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon">设备产权单位：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="text" class="input form-control" aria-describedby="basic-addon3" readonly="readonly" th:value="${taji2.getProperty_contractor()}">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon">产权单位社会统一信用代码：</span>
+                                            <input type="text" class="input form-control"  aria-describedby="basic-addon3" readonly="readonly" th:value="${taji2.getProperty_contractor_id()}">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon">安装单位：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="text" class="input form-control" aria-describedby="basic-addon3" readonly="readonly" th:value="${taji2.getInstallation_contractor()}">
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">安装时间：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="text" class="input form-control" aria-describedby="basic-addon3" readonly="readonly" th:value="${taji2.getInstalling_time()}">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon">拆除单位：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="text" th:if="${taji2.getDismantle_contractor() !=null}" class="input form-control" aria-describedby="basic-addon3" readonly="readonly"
+                                                   th:value="${taji2.getDismantle_contractor()}">
+                                            <input type="text" th:if="${taji2.getDismantle_contractor() ==null}" class="input form-control" aria-describedby="basic-addon3" readonly="readonly"
+                                                   value="未拆除">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon">拆除时间：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="text" th:if="${taji2.getDismantle_time() !=null && taji2.getDismantle_time()!='1900-01-01'}" class="input form-control" aria-describedby="basic-addon3" readonly="readonly"
+                                                   th:value="${taji2.getDismantle_time()}">
+                                            <input type="text" th:if="${taji2.getDismantle_time() ==null || taji2.getDismantle_time() == '1900-01-01'}"
+                                                   value="未拆除" class="input form-control" aria-describedby="basic-addon3" readonly="readonly" text="未拆除">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon">x坐标：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="text" class="input form-control" aria-describedby="basic-addon3" readonly="readonly" th:value="${taji2.getPosition_left()}">
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">y坐标：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="text" class="input form-control" aria-describedby="basic-addon3" readonly="readonly" th:value="${taji2.getPosition_top()}">
+                                        </div>
+
+                                    </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+                    <div th:each="sjj2:${sjj_list}">
+                        <div class="modal fade" th:id="${sjj2.getSn()}" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1>升降机设备详情</h1>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                     ×
+                                        </button>
+                                    </div>
+                                    <div class="modal-body form-horizontal">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">SN编号：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="text" readonly="readonly" class="input form-control" th:value="${sjj2.getSn()}">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon">设备名字：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="text" readonly="readonly" class="input form-control"  aria-describedby="basic-addon3" th:value="${sjj2.getName()}">
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">设备信息号：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="text" class="input form-control"  aria-describedby="basic-addon3" readonly="readonly" th:value="${sjj2.getXinxihao()}">
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">型号：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="text" class="input form-control" readonly="readonly" aria-describedby="basic-addon3" th:value="${sjj2.getType()}">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon">设备产权单位：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="text" class="input form-control" aria-describedby="basic-addon3" readonly="readonly" th:value="${sjj2.getProperty_contractor()}">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon">产权单位社会统一信用代码：</span>
+                                            <input type="text" class="input form-control"  aria-describedby="basic-addon3" readonly="readonly" th:value="${sjj2.getProperty_contractor_id()}">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon">安装单位：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="text" class="input form-control" aria-describedby="basic-addon3" readonly="readonly" th:value="${sjj2.getInstallation_contractor()}">
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">安装时间：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="text" class="input form-control" aria-describedby="basic-addon3" readonly="readonly" th:value="${sjj2.getInstalling_time()}">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon">拆除单位：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="text" th:if="${sjj2.getDismantle_contractor() !=null}" class="input form-control" aria-describedby="basic-addon3" readonly="readonly"
+                                                   th:value="${sjj2.getDismantle_contractor()}">
+                                            <input type="text" th:if="${sjj2.getDismantle_contractor() ==null}" class="input form-control" aria-describedby="basic-addon3" readonly="readonly"
+                                                   value="未拆除">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon">拆除时间：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="text" th:if="${sjj2.getDismantle_time() !=null && sjj2.getDismantle_time()!='1900-01-01'}" class="input form-control" aria-describedby="basic-addon3" readonly="readonly"
+                                                   th:value="${sjj2.getDismantle_time()}">
+                                            <input type="text" th:if="${sjj2.getDismantle_time() ==null || sjj2.getDismantle_time() == '1900-01-01'}"
+                                                   value="未拆除" class="input form-control" aria-describedby="basic-addon3" readonly="readonly" text="未拆除">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon">x坐标：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="text" class="input form-control" aria-describedby="basic-addon3" readonly="readonly" th:value="${sjj2.getPosition_left()}">
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">y坐标：&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
+                                            <input type="text" class="input form-control" aria-describedby="basic-addon3" readonly="readonly" th:value="${sjj2.getPosition_top()}">
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
