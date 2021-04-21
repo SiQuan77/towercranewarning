@@ -32,6 +32,29 @@
                     <div class="col-md-12">
                         <div class="card">
                             <button class="btn btn-primary" onclick="add_equip()">新增设备</button>
+                            <form th:action="@{/equip/search}" method="post">
+                                <span>设备名字:</span>
+                                <input type="text" name="search_equip_name">
+
+                                <span>设备SN:</span>
+                                <input type="text" name="search_equip_sn">
+
+                                <span>设备型号:</span>
+                                <input type="text" name="search_equip_type">
+
+                                <span>设备产权单位:</span>
+                                <input type="text" name="search_equip_cqdw">
+
+                                <span>安装单位:</span>
+                                <input type="text" name="search_equip_azdw">
+
+
+                                <button type="reset" class="btn btn-danger">重置</button>
+                                <button type="submit" class="btn btn-primary">搜索</button>
+                            </form>
+
+
+
                             <table class="table table-striped" id="equip_table">
                                 <thead>
                                     <th>sn编号</th>

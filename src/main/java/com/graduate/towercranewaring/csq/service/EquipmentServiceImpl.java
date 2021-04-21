@@ -43,4 +43,9 @@ public class EquipmentServiceImpl implements EquipmentService{
     public boolean addEquipment(equipment equipment) {
         return equipmentDao.addEquipment(equipment);
     }
+
+    @Override
+    public List<equipment> searchEquipment(String equip_name, String equip_sn, String equip_type, String equip_cqdw, String equip_azdw) {
+        return equipmentDao.searchEquipment(equip_name,equip_sn,equip_type,equip_cqdw,equip_azdw);
+    }
 }

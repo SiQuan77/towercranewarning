@@ -10,4 +10,6 @@ public interface EquipmentService {
     boolean deleteEquipmentBySn(String equip_sn);
     boolean updateEquipmentByEquip(equipment equipment);
     boolean addEquipment(equipment equipment);
+    List<equipment> searchEquipment(String equip_name,String equip_sn,
+                                    String equip_type,String equip_cqdw,String equip_azdw);
 }

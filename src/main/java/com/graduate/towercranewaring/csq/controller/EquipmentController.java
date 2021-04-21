@@ -114,4 +114,35 @@ public class EquipmentController {
         return "redirect:/equip/ToequipList";
     }
 
+
+    @PostMapping("/equip/search")
+    public String search(@RequestParam(value = "search_equip_name",required = false)String equip_name,
+                         @RequestParam(value = "search_equip_sn",required = false) String equip_sn,
+                         @RequestParam(value = "search_equip_type",required = false) String equip_type,
+                         @RequestParam(value = "search_equip_cqdw",required = false) String equip_cqdw,
+                         @RequestParam(value = "search_equip_azdw",required = false) String equip_azdw,
+                         Model model){
+
+        if(equip_name.equals("")){
+            equip_name=null;
+        }
+        if(equip_sn.equals("")){
+            equip_sn=null;
+        }
+        if(equip_type.equals("")){
+            equip_type=null;
+        }
+        if(equip_cqdw.equals("")){
+            equip_cqdw=null;
+        }
+        if(equip_azdw.equals("")){
+            equip_azdw=null;
+        }
+        model.addAttribute("equip_list",equipmentService.searchEquipment(equip_name,equip_sn,equip_type,equip_cqdw,equip_azdw));
+
+
+
+        return "/equipment/equipment_list";
+    }
+
 }

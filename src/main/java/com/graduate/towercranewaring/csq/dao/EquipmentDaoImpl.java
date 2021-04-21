@@ -84,4 +84,36 @@ public class EquipmentDaoImpl implements EquipmentDao{
                 equipment.getInstallation_contractor(),equipment.getInstalling_time(),equipment.getDismantle_contractor(),equipment.getDismantle_time(),equipment.getPosition_left(),equipment.getPosition_top());
         return row!=0;
     }
+
+    @Override
+    public List<equipment> searchEquipment(String equip_name, String equip_sn, String equip_type, String equip_cqdw, String equip_azdw) {
+        String sql="select * from equipment where 1=1";
+        if(equip_name!=null){
+            sql+=" and name like '%"+equip_name+"%'";
+        }
+        if(equip_sn!=null){
+            sql+=" and sn like '%"+equip_sn+"%'";
+        }
+
+        if(equip_type!=null){
+            sql+=" and type like '%"+equip_type+"%'";
+        }
+
+        if(equip_cqdw!=null){
+            sql+=" and property_contractor like '%"+equip_cqdw+"%'";
+        }
+
+        if(equip_azdw!=null){
+            sql+=" and installation_contractor like '%"+equip_azdw+"%'";
+        }
+
+        try{
+            return jdbcTemplate.query(sql,
+                    new BeanPropertyRowMapper<>(equipment.class));
+        }catch (Exception e){
+            return null;
+        }
+
+
+    }
 }
