@@ -39,38 +39,22 @@
                                 <h1>施工地图</h1>
                             </div>
                             <div class="card-body">
-                                <button onclick="dingwei1()" id="button_dingwei" class="btn btn-primary">新增设备定位</button>
-                                <div id="dingwei" style="display: none">
-
-                                    <form method="post" th:action="@{/map/submit_dingwei}">
-                                        X坐标:<input id="x_position" readonly="readonly" name="position_x">
-                                        Y坐标:<input id="y_position" readonly="readonly" name="position_y">
-                                        <span>请选择需要添加位置的设备：</span>
-                                        <select th:each="taji3:${dingwei_list}" id="select_dingwei" name="equip_sn">
-                                            <option th:value="${taji3.getSn()}" th:text="${taji3.getSn()}" ></option>
-                                        </select>
-                                        <button class="btn btn-primary" type="submit">提交定位</button>
-                                    </form>
-
-                                </div>
-                               <input id="flag" type="hidden" value="0">
-                                <input id="xxx" type="hidden" >
-                                <input id="yyy" type="hidden">
-                                <img th:src="@{/imgs/map.jpg}" style="width: 100%;height: 800px;position: relative" onclick="Show(this)">
+                                <img th:src="@{/imgs/map.jpg}" style="width: 100%;height: 800px;position: relative">
                                 <div th:each="taji:${taji_list}">
-                                    <img th:if="${taji.getPosition_top()!=-1&&taji.getPosition_left()!=-1}" th:src="@{/imgs/taji.jpg}" class="img-circle" th:style="|width:50px;height: 50px;z-index: 1;position: absolute;top:${taji.getPosition_top()}px;left: ${taji.getPosition_left}px|"
-                                         th:onclick="show([[${taji.getSn()}]])">
+                                   <img th:src="@{/imgs/taji.jpg}" class="img-circle" th:style="|width:50px;height: 50px;z-index: 1;position: absolute;top:${taji.getPosition_top()}px;left: ${taji.getPosition_left}px|"
+                                        th:onclick="show([[${taji.getSn()}]])">
                                 </div>
 
                                 <div th:each="sjj:${sjj_list}">
-                                    <img th:if="${sjj.getPosition_left()!=-1&&sjj.getPosition_top()!=-1}" th:src="@{/imgs/sjj.jpg}" class="img-circle" th:style="|width:50px;height: 50px;z-index: 1;position: absolute;top:${sjj.getPosition_top()}px;left: ${sjj.getPosition_left}px|"
+                                    <img th:src="@{/imgs/sjj.jpg}" class="img-circle" th:style="|width:50px;height: 50px;z-index: 1;position: absolute;top:${sjj.getPosition_top()}px;left: ${sjj.getPosition_left}px|"
                                          th:onclick="show([[${sjj.getSn()}]])">
                                 </div>
+
+
                             </div>
                         </div>
 
                     </div>
-
 
                     <div th:each="taji2:${taji_list}">
                         <div class="modal fade" th:id="${taji2.getSn()}" tabindex="-1" role="dialog" aria-hidden="true">
@@ -146,13 +130,13 @@
                                         </div>
 
                                     </div>
-                                </div>
                             </div>
-
                         </div>
 
-
                     </div>
+
+
+                </div>
 
                     <div th:each="sjj2:${sjj_list}">
                         <div class="modal fade" th:id="${sjj2.getSn()}" tabindex="-1" role="dialog" aria-hidden="true">
@@ -161,7 +145,7 @@
                                     <div class="modal-header">
                                         <h1>升降机设备详情</h1>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                            ×
+                                                     ×
                                         </button>
                                     </div>
                                     <div class="modal-body form-horizontal">
@@ -235,7 +219,6 @@
 
 
                     </div>
-
 
             </div>
         </div>

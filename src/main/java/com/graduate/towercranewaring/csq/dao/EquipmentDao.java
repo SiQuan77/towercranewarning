@@ -12,4 +12,5 @@ public interface EquipmentDao {
     boolean addEquipment(equipment equipment);
     List<equipment> searchEquipment(String equip_name,String equip_sn,
                                     String equip_type,String equip_cqdw,String equip_azdw);
+    boolean dingweiEquip(String equip_sn,int x,int y);
 }

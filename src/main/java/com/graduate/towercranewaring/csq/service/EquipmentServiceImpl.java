@@ -48,4 +48,9 @@ public class EquipmentServiceImpl implements EquipmentService{
     public List<equipment> searchEquipment(String equip_name, String equip_sn, String equip_type, String equip_cqdw, String equip_azdw) {
         return equipmentDao.searchEquipment(equip_name,equip_sn,equip_type,equip_cqdw,equip_azdw);
     }
+
+    @Override
+    public boolean dingweiEquip(String equip_sn, int x, int y) {
+        return equipmentDao.dingweiEquip(equip_sn,x,y);
+    }
 }

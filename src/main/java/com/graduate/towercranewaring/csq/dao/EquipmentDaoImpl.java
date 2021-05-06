@@ -116,4 +116,11 @@ public class EquipmentDaoImpl implements EquipmentDao{
 
 
     }
+
+    @Override
+    public boolean dingweiEquip(String equip_sn, int x, int y) {
+        String sql="update equipment set position_left = ?,position_top = ? where sn = ?";
+        int row=jdbcTemplate.update(sql,x,y,equip_sn);
+        return row != 0;
+    }
 }
