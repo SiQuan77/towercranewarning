@@ -15,7 +15,7 @@
         <img th:src="@{/imgs/logo.jpg}" style="width: 45px;height: 45px;margin-left: 50px" alt="logo">
     </a>
 
-    <a href="#" class="btn btn-link sidebar-toggle d-md-down-none">
+    <a th:if="${source!='map'}" href="#" class="btn btn-link sidebar-toggle d-md-down-none">
         <i class="fa fa-bars"></i>
     </a>
 
@@ -110,6 +110,17 @@
                     </a>
                     <a th:if="${source!='map'}" th:href="@{/map/ToMap}" class="nav-link">
                         <i class="icon icon-map"></i> 地图一览
+                    </a>
+                </div>
+
+
+                <div shiro:hasPermission="admin:all">
+                    <!--            用if进行判断，不用三目运算符是因为{}会被转义    同理-->
+                    <a th:if="${source=='big_show'}" href="#" class="nav-link">
+                        <i class="icon icon-screen-desktop"></i> 大屏概况
+                    </a>
+                    <a th:if="${source!='big_show'}" th:href="@{/show/ToBigShow}" class="nav-link">
+                        <i class="icon icon-screen-desktop"></i> 大屏概况
                     </a>
                 </div>
 
