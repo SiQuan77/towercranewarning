@@ -41,7 +41,8 @@ public class Taji_workingDaoImpl implements Taji_workingDao{
         String alert_information="";
         if(taji_working.getLoading_payload()>taji_working.getMaximum_payload()){
             alert_information+="超重/";
-        }else if(taji_working.getMoment()>10){
+        }
+        if(taji_working.getMoment()>10){
             alert_information+="力矩报警/";
         }
 

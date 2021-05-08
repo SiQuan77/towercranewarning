@@ -41,17 +41,15 @@ public class Sjj_workingDaoImpl implements Sjj_workingDao{
     @Override
     public String judgeIfAlert(sjj_working sjj_working) {
         String alert_information="";
-        if(sjj_working.getHeight()>sjj_working.getTop_limit()){
-            alert_information+="超过上限位/";
-        }else if(sjj_working.getHeight()<sjj_working.getLow_limit()){
-            alert_information+="超过下限位/";
-        }else if(sjj_working.getLock_condition()==0){
+        if(sjj_working.getHeight()>sjj_working.getTop_limit()-10){
+            alert_information+="上限位预警/";
+        }
+        if(sjj_working.getLock_condition()==0){
             alert_information+="未上锁/";
-        }else if(sjj_working.getTilt_range()>15){
+        }
+        if(sjj_working.getTilt_range()>15){
             alert_information+="过度倾斜/";
         }
-
-
         return alert_information;
     }
 

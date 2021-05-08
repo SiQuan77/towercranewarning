@@ -63,7 +63,12 @@
                                         style="color: green;" th:text="${taji_pack.getTaji_working().getLoading_payload()}"></td>
                                     <td th:text="${taji_pack.getTaji_working().getHeight()}"></td>
                                     <td th:text="${taji_pack.getTaji_working().getRange_size()}"></td>
-                                    <td th:text="${taji_pack.getTaji_working().getMoment()}"></td>
+
+                                    <td th:if="${taji_pack.getTaji_working().getMoment() > 10}"
+                                        style="color: red;font-weight: bolder" th:text="${taji_pack.getTaji_working().getMoment()}"></td>
+                                    <td th:if="${taji_pack.getTaji_working().getMoment() <= 10}"   style="color: green;"
+                                        th:text="${taji_pack.getTaji_working().getMoment()}"></td>
+
                                     <td th:text="${taji_pack.getDriver().getDriver_name()}"></td>
                                     <td>
                                         <button class="btn btn-primary" th:onclick="show_more([[${taji_pack.getTaji_working().getId()}]])">详情</button>

@@ -45,7 +45,40 @@ public class Alert_informationServiceImpl implements Alert_informationService{
         return null;
     }
 
+    @Override
+    public ArrayList<Integer> returnAlert() {
+        List<alert_information_packing> allAlertList = getAllAlertList();
+        int overWeight=0;
+        int liju=0;
+        int shangxianwei=0;
+        int qingxie=0;
+        int shangsuo=0;
+        for(int i=0;i<allAlertList.size();i++){
+            if(allAlertList.get(i).getAlert_information().getType().contains("超重")){
+                overWeight++;
+            }
+            if(allAlertList.get(i).getAlert_information().getType().contains("力矩")){
+                liju++;
+            }
+            if(allAlertList.get(i).getAlert_information().getType().contains("上限位")){
+                shangxianwei++;
+            }
 
+            if(allAlertList.get(i).getAlert_information().getType().contains("斜")){
+                qingxie++;
+            }
+            if(allAlertList.get(i).getAlert_information().getType().contains("锁")){
+                shangsuo++;
+            }
+        }
+        ArrayList<Integer> arrayList=new ArrayList<>();
+        arrayList.add(overWeight);
+        arrayList.add(liju);
+        arrayList.add(shangxianwei);
+        arrayList.add(qingxie);
+        arrayList.add(shangsuo);
+        return arrayList;
+    }
 
 
     @Override
