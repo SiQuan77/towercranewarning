@@ -11,4 +11,5 @@ public interface Taji_workingDao {
     String judgeIfAlert(taji_working taji_working);
     taji_working getTaji_workingById(String id);
     boolean updateTaji_working(taji_working taji_working);
+    boolean insertTaji_working(taji_working taji_working);
 }

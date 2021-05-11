@@ -46,8 +46,8 @@
                                         X坐标:<input id="x_position" readonly="readonly" name="position_x">
                                         Y坐标:<input id="y_position" readonly="readonly" name="position_y">
                                         <span>请选择需要添加位置的设备：</span>
-                                        <select th:each="taji3:${dingwei_list}" id="select_dingwei" name="equip_sn">
-                                            <option th:value="${taji3.getSn()}" th:text="${taji3.getSn()}" ></option>
+                                        <select  id="select_dingwei" name="equip_sn">
+                                            <option th:each="taji3:${dingwei_list}" th:value="${taji3.getSn()}" th:text="${taji3.getSn()}" ></option>
                                         </select>
                                         <button class="btn btn-primary" type="submit">提交定位</button>
                                     </form>

@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+>
+
+<!--需要导入两个命名空间！-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>机械预警系统主页</title>
+        <link rel="stylesheet" th:href="@{/vendor/simple-line-icons/css/simple-line-icons.css}">
+        <link rel="stylesheet" th:href="@{/vendor/font-awesome/css/fontawesome-all.min.css}">
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
+        <script th:src="@{/js/jquery-3.3.1.js}"></script>
+        <script th:src="@{/js/jquery.cookie.js}"></script>
+        <script th:src="@{/vendor/popper.js/popper.min.js}"></script>
+        <script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+        <script th:src="@{/js/carbon.js}"></script>
+</head>
+
+
+
+
+<body class="sidebar-fixed header-fixed">
+<div class="page-wrapper">
+
+    <div th:replace="~{commons/commons::header_navbar(source='show2')}"></div>
+<!--    thymeleaf进行一个传参操作-->
+
+
+    <div class="main-container">
+        <div th:replace="~{commons/commons::side_navbar(source='show2')}"></div>
+
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="card p-5">
+                            <div class="card-header">
+                                <h1>塔机实时数据:</h1>
+                                <span>选择需要查看的塔机：</span>
+                                <select id="taji_to_be_selected" name="equip_sn">
+                                    <option th:each="taji:${all_taji}"  th:value="${taji.getSn()}" th:text="${taji.getSn()}"></option>
+                                </select>
+                                <button class="btn btn-primary" id="start_moni" onclick="getData('taji')">模拟数据</button>
+                                <button class="btn btn-danger" id="stop_moni" style="display: none" onclick="stop_moni()">终止模拟</button>
+                            </div>
+                            <div class="card-body d-flex justify-content-between align-items-t">
+                                <div>
+                                    <h4 style="position: absolute;top: 340px;left: 390px" id="zaizhong">载重</h4>
+                                    <h4 style="position: absolute;top: 360px;left: 330px" id="zuida_zaizhong">最大载重</h4>
+                                    <h4 style="position: absolute;top: 340px;left: 550px" id="height">高度</h4>
+                                    <h4 style="position: absolute;top: 220px;left: 300px" id="moment">力矩</h4>
+                                    <h4 style="position: absolute;top: 190px;left: 160px" id="range">幅度</h4>
+                                    <h4 style="position: absolute;top: 610px;left: 300px" id="start_time">起吊时间</h4>
+                                    <h4 style="position: absolute;top: 660px;left: 300px" id="end_time">落吊时间</h4>
+                                    <img th:src="@{/imgs/taji.jpg}" style="width: 600px;height: 550px">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class="card p-4">
+                            <div class="card-header">
+                                <h1>塔机实时数据:</h1>
+                                <span>选择需要查看的升降机：</span>
+                                <select id="sjj_to_be_selected" name="equip_sn">
+                                    <option th:each="sjj:${all_sjj}"  th:value="${sjj.getSn()}" th:text="${sjj.getSn()}"></option>
+                                </select>
+                                <button class="btn btn-primary" id="start_moni2" onclick="getData2()">模拟数据</button>
+                                <button class="btn btn-danger" id="stop_moni2" style="display: none" onclick="stop_moni2()">终止模拟</button>
+                            </div>
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <h4 style="position: absolute;top: 300px;left: 500px" id="sjj_height">高度</h4>
+                                <h4 style="position: absolute;top: 340px;left: 500px" id="sjj_tilit">倾斜</h4>
+                                <h4 style="position: absolute;top: 400px;left: 500px" id="lock_conditon">上锁</h4>
+                                <h4 style="position: absolute;top: 440px;left: 500px" id="working_time">工作时间</h4>
+                                <img th:src="@{/imgs/sjj.jpg}" style="width: 500px;height: 600px">
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    var type_of_equip;
+    var sn;
+    var id_of_interval;
+
+
+    var sn_sjj;
+    var id_of_interval2;
+    function getData(type){
+        var select=document.getElementById("taji_to_be_selected");
+        var index=select.selectedIndex;
+        sn=select.options[index].value;
+        type_of_equip=type;
+        ajax();
+        id_of_interval=setInterval("ajax()",15000);
+
+        document.getElementById("start_moni").style.display="none";
+        document.getElementById("stop_moni").style.display="block";
+
+    }
+
+
+    function ajax(){
+        $.ajax({
+            type: "post",
+            url: "/show/getData",    //向后端请求数据的url
+            data: {
+                "sn":sn,
+                "type":type_of_equip
+            },
+            success: function (data) {
+                document.getElementById("zaizhong").innerHTML="载重:"+data.taji_working.loading_payload;
+                document.getElementById("zuida_zaizhong").innerHTML="最大载重:"+data.taji_working.maximum_payload;
+                document.getElementById("range").innerHTML="幅度:"+data.taji_working.range_size;
+                document.getElementById("height").innerHTML="高度:"+data.taji_working.height;
+                document.getElementById("moment").innerHTML="力矩:"+data.taji_working.moment;
+                document.getElementById("start_time").innerHTML="起吊时间:"+data.taji_working.starting_time;
+                document.getElementById("end_time").innerHTML="落吊时间:"+data.taji_working.ending_time;
+            }
+        });
+    }
+
+    function stop_moni(){
+        clearInterval(id_of_interval);
+        document.getElementById("start_moni").style.display="block";
+        document.getElementById("stop_moni").style.display="none";
+    }
+
+    function getData2(){
+        var select=document.getElementById("sjj_to_be_selected");
+        var index=select.selectedIndex;
+        sn_sjj=select.options[index].value;
+
+        ajax2();
+        id_of_interval2=setInterval("ajax2()",15000);
+
+        document.getElementById("start_moni2").style.display="none";
+        document.getElementById("stop_moni2").style.display="block";
+    }
+
+    function ajax2(){
+        $.ajax({
+            type: "post",
+            url: "/show/getData2",    //向后端请求数据的url
+            data: {
+                "sn":sn_sjj,
+            },
+            success: function (data) {
+                document.getElementById("sjj_height").innerHTML="高度:"+data.height;
+                if(data.lock_condition===0){
+                    document.getElementById("lock_conditon").innerHTML="未上锁";
+                }else {
+                    document.getElementById("lock_conditon").innerHTML="已上锁";
+                }
+                document.getElementById("sjj_tilit").innerHTML="倾斜程度："+data.tilt_range+"°";
+                document.getElementById("working_time").innerHTML=data.working_time;
+            }
+        });
+    }
+
+    function stop_moni2(){
+        clearInterval(id_of_interval2);
+        document.getElementById("start_moni2").style.display="block";
+        document.getElementById("stop_moni2").style.display="none";
+    }
+</script>
+</body>
+</html>

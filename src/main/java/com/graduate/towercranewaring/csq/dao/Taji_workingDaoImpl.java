@@ -69,6 +69,15 @@ public class Taji_workingDaoImpl implements Taji_workingDao{
     }
 
     @Override
+    public boolean insertTaji_working(taji_working taji_working) {
+        String sql="insert into taji_working VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        int row=jdbcTemplate.update(sql,taji_working.getId(),taji_working.getSn(),taji_working.getStarting_time(),taji_working.getEnding_time(),
+                taji_working.getMaximum_payload(),taji_working.getHeight(),taji_working.getLoading_payload(),taji_working.getRange_size(),
+                taji_working.getMoment(),taji_working.getDriver_id(),taji_working.getIf_include());
+        return row!=0;
+    }
+
+    @Override
     public HashMap<taji_working, String> getAlertTaji_working() {
         List<taji_working> allTajiworking = getAllTajiworking();
         HashMap<taji_working,String> taji_workingStringHashMap=new HashMap<>();

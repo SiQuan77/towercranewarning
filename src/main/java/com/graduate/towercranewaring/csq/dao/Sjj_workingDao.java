@@ -11,4 +11,5 @@ public interface Sjj_workingDao {
     String judgeIfAlert(sjj_working sjj_working);
     sjj_working getSjj_workingById(String id);
     boolean updateSjj_working(sjj_working sjj_working);
+    boolean insertSjj_working(sjj_working sjj_working);
 }

@@ -124,6 +124,15 @@
                     </a>
                 </div>
 
+                <div shiro:hasPermission="admin:all">
+                    <!--            用if进行判断，不用三目运算符是因为{}会被转义    同理-->
+                    <a th:if="${source=='show2'}" href="#" class="nav-link">
+                        <i class="icon icon-screen-tablet"></i> 实时运行概况
+                    </a>
+                    <a th:if="${source!='show2'}" th:href="@{/show/ToShow2}" class="nav-link">
+                        <i class="icon icon-screen-tablet"></i> 实时运行概况
+                    </a>
+                </div>
             </li>
 
             <li class="nav-item">

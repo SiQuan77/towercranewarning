@@ -65,11 +65,19 @@ public class Sjj_workingDaoImpl implements Sjj_workingDao{
 
     @Override
     public boolean updateSjj_working(sjj_working sjj_working) {
-        System.out.println("sjjworking是"+sjj_working);
+//        System.out.println("sjjworking是"+sjj_working);
         String sql="update sjj_working set sn=?,top_limit=?,low_limit=?,tilt_range=?,lock_condition=?," +
                 "height=?,driver_id=?,working_time=?,if_include=? where id =?";
         int row=jdbcTemplate.update(sql,sjj_working.getSn(),sjj_working.getTop_limit(),sjj_working.getLow_limit(),sjj_working.getTilt_range(),
                 sjj_working.getLock_condition(),sjj_working.getHeight(),sjj_working.getDriver_id(),sjj_working.getWorking_time(),sjj_working.getIf_include(),sjj_working.getId());
+        return row!=0;
+    }
+
+    @Override
+    public boolean insertSjj_working(sjj_working sjj_working) {
+        String sql="insert into sjj_working VALUE (?,?,?,?,?,?,?,?,?,?)";
+        int row=jdbcTemplate.update(sql,sjj_working.getId(),sjj_working.getSn(),sjj_working.getTop_limit(),sjj_working.getLow_limit(),sjj_working.getTilt_range(),
+                sjj_working.getLock_condition(),sjj_working.getHeight(),sjj_working.getDriver_id(),sjj_working.getWorking_time(),sjj_working.getIf_include());
         return row!=0;
     }
 
