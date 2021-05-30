@@ -1,6 +1,7 @@
 package com.graduate.towercranewaring.csq.controller;
 
 import com.graduate.towercranewaring.csq.pojo.alert_information_packing;
+import com.graduate.towercranewaring.csq.pojo.sjj_working_packing;
 import com.graduate.towercranewaring.csq.service.Alert_informationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,9 +25,13 @@ public class Alert_informationController {
 
     @RequestMapping("/alert/ToAlertList")
     public String To_Alert_information_List(Model model){
-        List<alert_information_packing> allAlertList = alert_informationService.getAllAlertList();
-        System.out.println("size是"+allAlertList.size());
-        model.addAttribute("list_of_alert",allAlertList);
+        List<alert_information_packing> arrayList = alert_informationService.getAllAlertList();
+        for(int i=0,j=arrayList.size()-1;i<j;i++,j--) {
+            alert_information_packing temp = arrayList.get(i);
+            arrayList.set(i, arrayList.get(j));
+            arrayList.set(j, temp);
+        }
+        model.addAttribute("list_of_alert",arrayList);
         return "/alert/alert_information";
     }
 }
