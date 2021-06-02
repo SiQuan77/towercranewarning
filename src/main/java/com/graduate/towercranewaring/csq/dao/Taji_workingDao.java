@@ -12,4 +12,6 @@ public interface Taji_workingDao {
     taji_working getTaji_workingById(String id);
     boolean updateTaji_working(taji_working taji_working);
     boolean insertTaji_working(taji_working taji_working);
+    boolean deleteTaji_working(String tajiworking_id);
+    List<taji_working> getTaji_workingBySn(String sn);
 }

@@ -1,5 +1,6 @@
 package com.graduate.towercranewaring.csq.service;
 
+import com.graduate.towercranewaring.csq.dao.Alert_informationDaoImpl;
 import com.graduate.towercranewaring.csq.dao.DriverDaoImpl;
 import com.graduate.towercranewaring.csq.dao.EquipmentDaoImpl;
 import com.graduate.towercranewaring.csq.dao.Taji_workingDaoImpl;
@@ -29,6 +30,9 @@ public class Taji_workingServiceImpl implements Taji_workingService{
     private EquipmentDaoImpl equipmentDao;
     @Autowired
     private DriverDaoImpl driverDao;
+
+    @Autowired
+    private Alert_informationDaoImpl alert_informationDao;
 
     @Override
     public List<taji_working_packing> getAllTaji_working() {
@@ -75,5 +79,17 @@ public class Taji_workingServiceImpl implements Taji_workingService{
     @Override
     public boolean insertTaji_working(taji_working taji_working) {
         return taji_workingDao.insertTaji_working(taji_working);
+    }
+
+    @Override
+    public boolean deleteEquipBySn(String sn) {
+        List<taji_working> list_taji_workingBySn = taji_workingDao.getTaji_workingBySn(sn);
+        for(int i=0;i<list_taji_workingBySn.size();i++){
+            //先删预警信息
+            alert_informationDao.deleteAlertInformationByWorkId(list_taji_workingBySn.get(i).getId());
+            //再删本身
+            taji_workingDao.deleteTaji_working(list_taji_workingBySn.get(i).getId());
+        }
+        return true;
     }
 }

@@ -12,4 +12,6 @@ public interface Sjj_workingDao {
     sjj_working getSjj_workingById(String id);
     boolean updateSjj_working(sjj_working sjj_working);
     boolean insertSjj_working(sjj_working sjj_working);
+    boolean deleteSjj_working(sjj_working sjj_working);
+    List<sjj_working> getWorkBySn(String sn);
 }

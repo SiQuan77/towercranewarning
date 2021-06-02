@@ -39,4 +39,11 @@ public class Alert_informationDaoImpl implements Alert_informationDao{
                 ,alert_information.getType());
         return row!=0;
     }
+
+    @Override
+    public Boolean deleteAlertInformationByWorkId(String work_id) {
+        String sql="delete from alert_information where id_of_working = ?";
+        int row=jdbcTemplate.update(sql,work_id);
+        return row!=1;
+    }
 }

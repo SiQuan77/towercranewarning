@@ -1,6 +1,8 @@
 package com.graduate.towercranewaring.csq.service;
 
 import com.graduate.towercranewaring.csq.dao.EquipmentDao;
+import com.graduate.towercranewaring.csq.dao.Sjj_workingDao;
+import com.graduate.towercranewaring.csq.dao.Taji_workingDao;
 import com.graduate.towercranewaring.csq.pojo.equipment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,17 @@ public class EquipmentServiceImpl implements EquipmentService{
     @Autowired
     private EquipmentDao equipmentDao;
 
+    @Autowired
+    private Sjj_workingDao sjj_workingDao;
+
+    @Autowired
+    private Taji_workingDao taji_workingDao;
+    @Autowired
+    private Sjj_workingService sjj_workingService;
+
+    @Autowired
+    private Taji_workingService taji_workingService;
+
     @Override
     public List<equipment> getAllEquip() {
         return equipmentDao.getAllEquip();
@@ -31,6 +44,17 @@ public class EquipmentServiceImpl implements EquipmentService{
 
     @Override
     public boolean deleteEquipmentBySn(String equip_sn) {
+        equipment equipment=getEquipmentBySn(equip_sn);
+        if(equipment!=null){
+            if(equipment.getXinxihao().startsWith("SJJ")){
+                sjj_workingService.deleteEquipment(equip_sn);
+            }else if(equipment.getXinxihao().startsWith("TJ")){
+                taji_workingService.deleteEquipBySn(equip_sn);
+            }
+        }else {
+            return false;
+        }
+
         return equipmentDao.deleteEquipmentBySn(equip_sn);
     }
 

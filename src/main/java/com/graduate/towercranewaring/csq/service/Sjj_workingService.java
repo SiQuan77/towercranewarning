@@ -11,4 +11,5 @@ public interface Sjj_workingService {
     List<sjj_working_packing> getAllSjj_Working();
     boolean insertSjj_working(sjj_working sjj_working);
     sjj_working insertSjj_working_Automatically(String sn);
+    boolean deleteEquipment(String sn);
 }

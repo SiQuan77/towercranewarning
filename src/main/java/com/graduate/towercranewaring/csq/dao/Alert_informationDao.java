@@ -15,4 +15,5 @@ import java.util.List;
 public interface Alert_informationDao {
     List<alert_information> getAllAlertInformation();
     Boolean InsertAlertInformation(alert_information alert_information);
+    Boolean deleteAlertInformationByWorkId(String work_id);
 }

@@ -1,5 +1,6 @@
 package com.graduate.towercranewaring.csq.service;
 
+import com.graduate.towercranewaring.csq.dao.Alert_informationDaoImpl;
 import com.graduate.towercranewaring.csq.dao.DriverDaoImpl;
 import com.graduate.towercranewaring.csq.dao.EquipmentDaoImpl;
 import com.graduate.towercranewaring.csq.dao.Sjj_workingDaoImpl;
@@ -28,6 +29,9 @@ public class Sjj_workingServiceImpl implements Sjj_workingService{
     private Sjj_workingDaoImpl sjj_workingDao;
     @Autowired
     private EquipmentDaoImpl equipmentDao;
+
+    @Autowired
+    private Alert_informationDaoImpl alert_informationDao;
 
     @Autowired
     private DriverDaoImpl driverDao;
@@ -72,5 +76,18 @@ public class Sjj_workingServiceImpl implements Sjj_workingService{
         sjj_working sjjWorking=new sjj_working(id_sjj_working,sn,top_limit,low_limit,tilt_range,lock_conditon,height,driver_id,time,0);
         insertSjj_working(sjjWorking);
         return sjjWorking;
+    }
+
+    @Override
+    public boolean deleteEquipment(String sn) {
+        List<sjj_working> list_workBySn = sjj_workingDao.getWorkBySn(sn);
+
+        for(int i=0;i<list_workBySn.size();i++){
+            //先删预警信息
+            alert_informationDao.deleteAlertInformationByWorkId(list_workBySn.get(i).getId());
+            //再删升降机工作记录
+            sjj_workingDao.deleteSjj_working(list_workBySn.get(i));
+        }
+        return false;
     }
 }

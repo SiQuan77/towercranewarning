@@ -81,6 +81,25 @@ public class Sjj_workingDaoImpl implements Sjj_workingDao{
         return row!=0;
     }
 
+    @Override
+    public boolean deleteSjj_working(sjj_working sjj_working) {
+        String sql="delete from sjj_working where id = ?";
+        int row=jdbcTemplate.update(sql,sjj_working.getId());
+        return row!=1;
+    }
+
+    @Override
+    public List<sjj_working> getWorkBySn(String sn) {
+        String sql="select * from sjj_working where sn = ?";
+        try{
+            return jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(sjj_working.class),sn);
+        }catch (Exception e){
+            System.out.printf(e.toString());
+            return null;
+        }
+    }
+
+
 
     @Override
     public HashMap<sjj_working, String> getAlertSjj_working() {

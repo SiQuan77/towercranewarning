@@ -4,6 +4,7 @@ import com.graduate.towercranewaring.csq.pojo.driver;
 import com.graduate.towercranewaring.csq.pojo.sjj_working;
 import com.graduate.towercranewaring.csq.pojo.taji_working;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -75,6 +76,24 @@ public class Taji_workingDaoImpl implements Taji_workingDao{
                 taji_working.getMaximum_payload(),taji_working.getHeight(),taji_working.getLoading_payload(),taji_working.getRange_size(),
                 taji_working.getMoment(),taji_working.getDriver_id(),taji_working.getIf_include());
         return row!=0;
+    }
+
+    @Override
+    public boolean deleteTaji_working(String tajiworking_id) {
+        String sql="delete from taji_working where id = ?";
+        int row=jdbcTemplate.update(sql,tajiworking_id);
+        return row!=1;
+    }
+
+    @Override
+    public List<taji_working> getTaji_workingBySn(String sn) {
+        String sql="select * from taji_working where sn = ?";
+        try{
+           return jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(taji_working.class),sn);
+        }catch (Exception e){
+            System.out.println(e.toString());
+            return null;
+        }
     }
 
     @Override
